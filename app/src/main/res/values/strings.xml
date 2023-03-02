@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">donate</string>
+
+    <!-- Main Activity -->
+    <string name="tasks_menu">Мои задачи</string>
+    <string name="family_menu">Семья</string>
+    <string name="profile_menu">Я</string>
+    
+    <!-- Tasks Fragment -->
+    <string name="search_by_tasks">Поиск по задачам</string>
+    <string name="goal">Цель</string>
 </resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navItemTasks"
+        android:icon="@drawable/ic_tasks"
+        android:title="@string/tasks_menu" />
+    <item
+        android:id="@+id/navItemFamily"
+        android:icon="@drawable/ic_family"
+        android:title="@string/family_menu" />
+    <item
+        android:id="@+id/navItemProfile"
+        android:title="@string/profile_menu" />
+</menu>
