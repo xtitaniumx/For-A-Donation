@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">donate</string>
+    <string name="app_name">За донат</string>
 
     <!-- Main Activity -->
     <string name="tasks_menu">Мои задачи</string>
@@ -8,5 +8,6 @@
     
     <!-- Tasks Fragment -->
     <string name="search_by_tasks">Поиск по задачам</string>
+    <string name="goal_percentage_pattern">%1$d%%</string>
     <string name="goal">Цель</string>
 </resources>

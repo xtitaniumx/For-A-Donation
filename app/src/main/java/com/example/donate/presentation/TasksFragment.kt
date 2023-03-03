@@ -31,14 +31,14 @@ class TasksFragment : Fragment() {
     }
 
     private fun init() = with(binding) {
-        textGoalProgress.text = progressGoal.progress.toString() + "%"
+        textGoalProgress.text = getString(R.string.goal_percentage_pattern, progressGoal.progress)
 
         listTasks.apply {
             layoutManager = LinearLayoutManager(requireActivity())
             adapter = taskAdapter
         }
 
-        // Здесь будет потом получение данных с сервера
+        // Здесь будет потом получение данных с сервера, через observer
         taskAdapter.submitList(listOf(
             TaskItem(name = "Header 1", desc = "Desc 1", R.drawable.ic_tasks),
             TaskItem(name = "Header 2", desc = "Desc 2", R.drawable.ic_tasks),
