@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">За донат</string>
 
+    <!-- Login Activity -->
+    <string name="no_have_account">Нет аккаунта? <u><font color='#673AB7'>Создайте семью</font></u></string>
+
     <!-- Main Activity -->
     <string name="tasks_menu">Мои задачи</string>
     <string name="family_menu">Семья</string>

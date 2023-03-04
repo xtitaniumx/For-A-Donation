@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.donate.R
 import com.example.donate.databinding.FragmentTasksBinding
-import com.example.donate.model.TaskItem
+import com.example.donate.domain.model.TaskItem
 import com.example.donate.presentation.adapter.TaskAdapter
 
 class TasksFragment : Fragment() {

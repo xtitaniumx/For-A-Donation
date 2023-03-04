@@ -1,4 +1,4 @@
-package com.example.donate.model
+package com.example.donate.domain.model
 
 data class TaskItem(
     val name: String,

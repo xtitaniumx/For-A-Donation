@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.donate.R
 import com.example.donate.databinding.ItemTaskBinding
-import com.example.donate.model.TaskItem
+import com.example.donate.domain.model.TaskItem
 
 class TaskAdapter : ListAdapter<TaskItem, TaskAdapter.Holder>(Comparator()) {
     class Holder(itemView: View) : ViewHolder(itemView) {
