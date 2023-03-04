@@ -17,25 +17,26 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imageTask"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"
-            app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/textTaskName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
             android:fontFamily="@font/manrope_bold"
             android:textColor="#000000"
+            android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/imageTask"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Header" />
@@ -46,6 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:fontFamily="@font/manrope_medium"
+            android:textSize="12sp"
             app:layout_constraintStart_toStartOf="@+id/textTaskName"
             app:layout_constraintTop_toBottomOf="@+id/textTaskName"
             tools:text="Subhead" />

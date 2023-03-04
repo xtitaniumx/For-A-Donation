@@ -43,10 +43,10 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingStart="16dp"
-            android:paddingTop="12dp"
-            android:paddingEnd="16dp"
-            android:paddingBottom="16dp">
+            android:paddingStart="12dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="12dp">
 
             <com.google.android.material.progressindicator.CircularProgressIndicator
                 android:id="@+id/progressGoal"
@@ -55,20 +55,20 @@
                 android:layout_marginTop="4dp"
                 android:progress="60"
                 app:indicatorColor="@color/purple_500"
-                app:indicatorSize="140dp"
+                app:indicatorSize="100dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:trackColor="@color/purple_200"
                 app:trackCornerRadius="5dp"
-                app:trackThickness="16dp" />
+                app:trackThickness="11dp" />
 
             <TextView
                 android:id="@+id/textGoalProgress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_medium"
+                android:fontFamily="@font/manrope_bold"
                 android:textColor="@color/purple_500"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@+id/progressGoal"
                 app:layout_constraintEnd_toEndOf="@+id/progressGoal"
                 app:layout_constraintStart_toStartOf="@+id/progressGoal"
@@ -80,10 +80,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:fontFamily="@font/inter_bold"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/manrope_bold"
                 android:text="@string/goal"
                 android:textColor="@color/black"
-                android:textSize="34sp"
+                android:textSize="24sp"
                 app:layout_constraintStart_toEndOf="@+id/progressGoal"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -93,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
                 android:layout_marginTop="8dp"
-                android:fontFamily="@font/inter_regular"
+                android:fontFamily="@font/manrope_regular"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/textGoal"
                 app:layout_constraintTop_toBottomOf="@+id/textGoal"
