@@ -1,7 +1,7 @@
 package com.example.donate.data.storage.network
 
-import com.example.donate.data.storage.model.AuthFamilyRequest
-import com.example.donate.data.storage.model.AuthFamilyResponse
+import com.example.donate.data.storage.model.request.AuthFamilyRequest
+import com.example.donate.data.storage.model.response.AuthFamilyResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.FormUrlEncoded

@@ -3,7 +3,8 @@ package com.example.donate.data.storage.network
 import android.content.Context
 import com.example.donate.data.storage.TokenStorage
 import com.example.donate.data.storage.UserStorage
-import com.example.donate.data.storage.model.*
+import com.example.donate.data.storage.model.request.AuthFamilyRequest
+import com.example.donate.data.storage.model.response.AuthFamilyResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -17,7 +18,7 @@ class NetworkUserStorage(private val context: Context, private val tokenStorage:
                 override fun onResponse(call: Call<AuthFamilyResponse>, response: Response<AuthFamilyResponse>) {
                     val loginResponse = response.body()
 
-                    if (loginResponse?.statusCode == 200 && loginResponse.family != null) {
+                    if (loginResponse?.statusCode == 200 /*&& loginResponse.family != null*/) {
                         tokenStorage.saveAuthToken(loginResponse.authToken)
                     } else {
                         // Error logging in

@@ -1,4 +1,4 @@
-package com.example.donate.data.storage.model
+package com.example.donate.data.storage.model.request
 
 import com.google.gson.annotations.SerializedName
 
