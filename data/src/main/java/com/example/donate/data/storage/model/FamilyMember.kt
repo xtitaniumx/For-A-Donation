@@ -2,7 +2,7 @@ package com.example.donate.data.storage.model
 
 import com.google.gson.annotations.SerializedName
 
-data class FamilyMemberNet(
+data class FamilyMember(
     @SerializedName("id")
     val id: String,
 

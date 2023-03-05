@@ -10,5 +10,5 @@ data class AuthFamilyResponse(
     val authToken: String,
 
     @SerializedName("family")
-    val family: FamilyNet?
+    val family: Family?
 )
