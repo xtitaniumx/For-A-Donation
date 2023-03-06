@@ -43,7 +43,9 @@ class NewTaskActivity : AppCompatActivity() {
 
         editTextDate.keyListener = null
         editTextDate.setOnClickListener {
-            datePicker.show(supportFragmentManager, "tag")
+            if (!datePicker.isVisible) {
+                datePicker.show(supportFragmentManager, "tag")
+            }
         }
 
         val timePicker = MaterialTimePicker.Builder()
@@ -64,7 +66,9 @@ class NewTaskActivity : AppCompatActivity() {
 
         editTextTime.keyListener = null
         editTextTime.setOnClickListener {
-            timePicker.show(supportFragmentManager, "tag")
+            if (!timePicker.isVisible) {
+                timePicker.show(supportFragmentManager, "tag")
+            }
         }
     }
 

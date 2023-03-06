@@ -1,9 +1,6 @@
 package com.example.donate.di
 
-import com.example.donate.domain.usecase.AddFamilyMemberUseCase
-import com.example.donate.domain.usecase.AuthByEmailUseCase
-import com.example.donate.domain.usecase.CreateFamilyUseCase
-import com.example.donate.domain.usecase.JoinToFamilyUseCase
+import com.example.donate.domain.usecase.*
 import org.koin.dsl.module
 
 val domainModule = module {
@@ -13,6 +10,10 @@ val domainModule = module {
 
     factory {
         AuthByEmailUseCase(userRepository = get())
+    }
+
+    factory {
+        TestAuthUseCase(userRepository = get())
     }
 
     factory {

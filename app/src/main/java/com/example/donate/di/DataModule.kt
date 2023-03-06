@@ -10,6 +10,10 @@ import com.example.donate.domain.repository.UserRepository
 import org.koin.dsl.module
 
 val dataModule = module {
+    single<TokenStorage> {
+        SharedPrefsTokenStorage(context = get())
+    }
+
     single<UserStorage> {
         NetworkUserStorage(
             context = get(),

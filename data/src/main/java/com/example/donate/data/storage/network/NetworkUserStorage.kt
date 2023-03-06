@@ -1,25 +1,27 @@
 package com.example.donate.data.storage.network
 
 import android.content.Context
+import android.util.Base64
 import com.example.donate.data.storage.TokenStorage
 import com.example.donate.data.storage.UserStorage
 import com.example.donate.data.storage.model.request.AuthFamilyRequest
+import com.example.donate.data.storage.model.request.TestAuthRequest
 import com.example.donate.data.storage.model.response.AuthFamilyResponse
+import com.example.donate.data.storage.model.response.TestAuthResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.nio.charset.StandardCharsets
 
-class NetworkUserStorage(private val context: Context, private val tokenStorage: TokenStorage, private val apiClient: ApiClient) : UserStorage {
+class NetworkUserStorage(context: Context, apiClient: ApiClient, private val tokenStorage: TokenStorage) : UserStorage {
+    private val apiService = apiClient.getApiService(context)
 
     override fun auth(param: AuthFamilyRequest) {
-        apiClient.getApiService(context)
-            .auth(AuthFamilyRequest(email = param.email, password = param.password))
+        apiService.auth(AuthFamilyRequest(phone = param.phone, password = param.password))
             .enqueue(object : Callback<AuthFamilyResponse> {
                 override fun onResponse(call: Call<AuthFamilyResponse>, response: Response<AuthFamilyResponse>) {
-                    val loginResponse = response.body()
-
-                    if (loginResponse?.statusCode == 200 /*&& loginResponse.family != null*/) {
-                        tokenStorage.saveAuthToken(loginResponse.authToken)
+                    if (response.isSuccessful) {
+                        tokenStorage.saveAuthToken(getToken(request = param))
                     } else {
                         // Error logging in
                     }
@@ -29,5 +31,18 @@ class NetworkUserStorage(private val context: Context, private val tokenStorage:
                     // Error logging in
                 }
             })
+    }
+
+    private fun getToken(request: AuthFamilyRequest): String {
+        val originalString = "Basic ${request.phone}:${request.password}"
+        val data = originalString.toByteArray(StandardCharsets.UTF_8)
+        return Base64.encodeToString(data, Base64.DEFAULT)
+    }
+
+    override suspend fun authTest(param: TestAuthRequest): TestAuthResponse? {
+        val response = apiService.authTest(
+            TestAuthRequest(username = param.username, password = param.password)
+        ).execute()
+        return response.body()
     }
 }

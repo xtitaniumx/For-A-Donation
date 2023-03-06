@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ApiClient {
     private lateinit var apiService: ApiService
-    private val url = "https://restful-booker.herokuapp.com"
+    private val url = "https://dummyjson.com"
 
     fun getApiService(context: Context): ApiService {
         if (!::apiService.isInitialized) {
