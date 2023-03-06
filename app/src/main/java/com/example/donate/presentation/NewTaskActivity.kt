@@ -1,6 +1,7 @@
 package com.example.donate.presentation
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.donate.R
 import com.example.donate.databinding.ActivityNewTaskBinding
@@ -12,6 +13,7 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_CLOCK
 import com.google.android.material.timepicker.TimeFormat
 import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class NewTaskActivity : AppCompatActivity() {
@@ -37,8 +39,8 @@ class NewTaskActivity : AppCompatActivity() {
             .build()
 
         datePicker.addOnPositiveButtonClickListener {
-            val formatter = SimpleDateFormat("Дата: dd/MM/yyyy", Locale.getDefault())
-            editTextDate.setText(formatter.format(Date(it)))
+            val formatter = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
+            editTextDate.setText("Дата: " + formatter.format(Date(it)))
         }
 
         editTextDate.keyListener = null
@@ -69,6 +71,15 @@ class NewTaskActivity : AppCompatActivity() {
             if (!timePicker.isVisible) {
                 timePicker.show(supportFragmentManager, "tag")
             }
+        }
+
+        buttonNewTask.setOnClickListener {
+            if (editTextDate.text.toString() == "" || editTextTime.text.toString() == "") {
+                return@setOnClickListener
+            }
+            val date = editTextDate.text.toString().split(' ')[1]
+            val time = "${timePicker.hour}:${timePicker.minute}:00"
+            Log.d("info", "${date}T${time}")
         }
     }
 
