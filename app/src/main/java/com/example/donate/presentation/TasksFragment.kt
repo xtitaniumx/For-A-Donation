@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.donate.R
 import com.example.donate.databinding.FragmentTasksBinding
@@ -34,6 +35,12 @@ class TasksFragment : Fragment() {
     }
 
     private fun init() = with(binding) {
+        viewSearch.buttonSearch.keyListener = null
+        viewSearch.buttonSearch.setOnClickListener {
+            val intent = Intent(requireActivity(), SearchActivity::class.java)
+            startActivity(intent)
+        }
+
         textGoalProgress.text = getString(R.string.goal_percentage_pattern, progressGoal.progress)
 
         listTasks.apply {

@@ -15,6 +15,10 @@
         android:theme="@style/Theme.Donate"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.SearchActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Donate.NoActionBar" />
+        <activity
             android:name=".presentation.NewTaskActivity"
             android:exported="false"
             android:theme="@style/Theme.Donate.NoActionBar" />
