@@ -28,7 +28,7 @@ class LoginActivity : AppCompatActivity() {
         buttonLogin.setOnClickListener {
             val intent = Intent(this@LoginActivity, MainActivity::class.java)
             startActivity(intent)
-            //vm.authTestUser(editTextEmail.text.toString(), editTextPassword.text.toString())
+            //vm.authUser(editTextEmail.text.toString(), editTextPassword.text.toString())
         }
 
         editTextPassword.setDrawableClickListener(object: onDrawableClickListener {

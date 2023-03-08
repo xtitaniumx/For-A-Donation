@@ -2,6 +2,7 @@ package com.example.donate.data.storage.network
 
 import android.content.Context
 import android.util.Base64
+import android.util.Log
 import com.example.donate.data.storage.TokenStorage
 import com.example.donate.data.storage.UserStorage
 import com.example.donate.data.storage.model.request.AuthFamilyRequest
@@ -22,6 +23,7 @@ class NetworkUserStorage(context: Context, apiClient: ApiClient, private val tok
                 override fun onResponse(call: Call<AuthFamilyResponse>, response: Response<AuthFamilyResponse>) {
                     if (response.isSuccessful) {
                         tokenStorage.saveAuthToken(getToken(request = param))
+                        response.body()?.let { Log.d("info", it.message) }
                     } else {
                         // Error logging in
                     }

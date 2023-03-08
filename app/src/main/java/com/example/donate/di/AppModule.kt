@@ -6,6 +6,6 @@ import org.koin.dsl.module
 
 val appModule = module {
     viewModel {
-        LoginViewModel(testAuthUseCase = get())
+        LoginViewModel(testAuthUseCase = get(), authByPhoneUseCase = get())
     }
 }

@@ -10,7 +10,7 @@ import com.example.donate.domain.model.TestUserItem
 import com.example.donate.domain.repository.UserRepository
 
 class UserRepositoryImpl(private val userStorage: UserStorage) : UserRepository {
-    override fun authByEmail(param: AuthFamilyParam) {
+    override fun authByPhone(param: AuthFamilyParam) {
         userStorage.auth(mapToStorage(param))
     }
 
@@ -21,7 +21,7 @@ class UserRepositoryImpl(private val userStorage: UserStorage) : UserRepository 
 
     private fun mapToStorage(loginFamilyParam: AuthFamilyParam): AuthFamilyRequest {
         return AuthFamilyRequest(
-            phone = loginFamilyParam.email,
+            phone = loginFamilyParam.phone,
             password = loginFamilyParam.password
         )
     }

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/colorBackground"
     tools:context=".presentation.TasksFragment">
 
     <include
@@ -25,7 +26,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="12dp"
-        app:cardBackgroundColor="@color/primary_on"
+        app:cardBackgroundColor="?attr/colorPrimaryContainer"
         app:cardCornerRadius="12dp"
         app:cardElevation="0dp"
         app:cardMaxElevation="0dp"
@@ -47,11 +48,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:progress="60"
-                app:indicatorColor="@color/purple_500"
+                app:indicatorColor="?attr/colorPrimary"
                 app:indicatorSize="100dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:trackColor="@color/purple_200"
+                app:trackColor="?attr/colorPrimaryInverse"
                 app:trackCornerRadius="5dp"
                 app:trackThickness="11dp" />
 
@@ -60,13 +61,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/manrope_bold"
-                android:textColor="@color/purple_500"
-                android:textSize="20sp"
+                android:textSize="24sp"
+                android:textColor="?attr/colorOnPrimaryContainer"
                 app:layout_constraintBottom_toBottomOf="@+id/progressGoal"
                 app:layout_constraintEnd_toEndOf="@+id/progressGoal"
                 app:layout_constraintStart_toStartOf="@+id/progressGoal"
                 app:layout_constraintTop_toTopOf="@+id/progressGoal"
-                tools:text="6/10" />
+                tools:text="@string/goal_progress_pattern" />
 
             <TextView
                 android:id="@+id/textGoal"
@@ -76,7 +77,7 @@
                 android:layout_marginTop="2dp"
                 android:fontFamily="@font/manrope_bold"
                 android:text="@string/goal"
-                android:textColor="@color/black"
+                android:textColor="?colorOnPrimaryContainer"
                 android:textSize="24sp"
                 app:layout_constraintStart_toEndOf="@+id/progressGoal"
                 app:layout_constraintTop_toTopOf="parent" />

@@ -10,8 +10,7 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 
 interface ApiService {
-    @POST("auth")
-    @FormUrlEncoded
+    @POST("/api/User/Registration")
     fun auth(@Body request: AuthFamilyRequest): Call<AuthFamilyResponse>
 
     @POST("auth/login")

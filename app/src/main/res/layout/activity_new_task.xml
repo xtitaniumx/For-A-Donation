@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="12dp"
         android:paddingBottom="12dp"
+        android:background="?attr/colorBackground"
         tools:context=".presentation.NewTaskActivity">
 
         <TextView
@@ -19,7 +20,7 @@
             android:layout_marginStart="16dp"
             android:fontFamily="@font/manrope_bold"
             android:text="Новая задача"
-            android:textColor="#000000"
+            android:textColor="?attr/colorOnBackground"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -32,7 +33,6 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="14dp"
             android:background="@drawable/bg_edit_text"
-            android:backgroundTint="@color/primary_on"
             android:ems="10"
             android:fontFamily="@font/inter_regular"
             android:hint="Название задачи"
@@ -52,7 +52,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:background="@drawable/bg_edit_text"
-            android:backgroundTint="@color/primary_on"
             android:ems="10"
             android:fontFamily="@font/inter_regular"
             android:hint="Описание задачи"
@@ -74,7 +73,7 @@
             android:layout_marginTop="12dp"
             android:fontFamily="@font/manrope_medium"
             android:text="Награда"
-            android:textColor="@color/black"
+            android:textColor="?attr/colorOnBackground"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextTaskDesc" />
@@ -100,7 +99,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
             android:layout_marginEnd="14dp"
-            app:cardBackgroundColor="@color/primary_on"
+            app:cardBackgroundColor="?attr/colorPrimaryContainer"
             app:cardCornerRadius="12dp"
             app:cardElevation="0dp"
             app:cardMaxElevation="0dp"
@@ -123,13 +122,13 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/manrope_regular"
                     android:text="Участники:"
-                    android:textColor="#000000"
+                    android:textColor="?attr/colorOnPrimaryContainer"
                     android:textSize="16sp" />
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/chipGroupFamilyMembers"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -141,7 +140,7 @@
             android:layout_marginTop="12dp"
             android:fontFamily="@font/manrope_medium"
             android:text="Продолжительность"
-            android:textColor="@color/black"
+            android:textColor="?attr/colorOnBackground"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardMembers" />
@@ -154,7 +153,6 @@
             android:layout_marginTop="12dp"
             android:layout_marginEnd="14dp"
             android:background="@drawable/bg_edit_text"
-            android:backgroundTint="@color/primary_on"
             android:drawableEnd="@drawable/ic_date"
             android:drawablePadding="8dp"
             android:ems="10"
@@ -179,7 +177,6 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="14dp"
             android:background="@drawable/bg_edit_text"
-            android:backgroundTint="@color/primary_on"
             android:drawableEnd="@drawable/ic_time"
             android:drawablePadding="8dp"
             android:ems="10"

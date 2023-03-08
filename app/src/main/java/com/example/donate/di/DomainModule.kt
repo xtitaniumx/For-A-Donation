@@ -9,7 +9,7 @@ val domainModule = module {
     }
 
     factory {
-        AuthByEmailUseCase(userRepository = get())
+        AuthByPhoneUseCase(userRepository = get())
     }
 
     factory {
