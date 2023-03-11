@@ -28,8 +28,8 @@ class SearchTaskAdapter(private val listener: OnClickListener) : ListAdapter<Tas
         fun bind(item: TaskItem) = with(binding) {
             taskItem = item
             textTaskName.text = item.name
-            textTaskDesc.text = item.desc
-            imageTask.setImageResource(item.icon)
+            //textTaskDesc.text = item.desc
+            //imageTask.setImageResource(item.icon)
         }
     }
 

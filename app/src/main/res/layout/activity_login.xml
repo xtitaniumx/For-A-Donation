@@ -55,16 +55,15 @@
                 android:fontFamily="@font/manrope_bold"
                 android:text="Вход в аккаунт"
                 android:textAlignment="center"
-                android:textColor="?attr/colorOnBackground"
+                android:textColor="?attr/colorOnPrimaryContainer"
                 android:textSize="24sp" />
 
             <EditText
-                android:id="@+id/editTextEmail"
+                android:id="@+id/editTextPhone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:background="@drawable/bg_edit_text"
-                android:backgroundTint="?attr/colorPrimaryInverse"
                 android:drawableStart="@drawable/ic_email"
                 android:drawablePadding="6dp"
                 android:ems="10"
@@ -82,7 +81,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/bg_edit_text"
-                android:backgroundTint="?attr/colorPrimaryInverse"
                 android:drawableLeft="@drawable/ic_password"
                 android:drawableRight="@drawable/ic_visibility_off"
                 android:drawablePadding="6dp"

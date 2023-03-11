@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.method.PasswordTransformationMethod
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.addTextChangedListener
 import com.example.donate.R
 import com.example.donate.databinding.ActivityLoginBinding
 import com.example.donate.presentation.vm.LoginViewModel
@@ -26,9 +25,9 @@ class LoginActivity : AppCompatActivity() {
 
     private fun init() = with(binding) {
         buttonLogin.setOnClickListener {
+            //vm.authUser(editTextPhone.text.toString(), editTextPassword.text.toString())
             val intent = Intent(this@LoginActivity, MainActivity::class.java)
             startActivity(intent)
-            //vm.authUser(editTextEmail.text.toString(), editTextPassword.text.toString())
         }
 
         editTextPassword.setDrawableClickListener(object: onDrawableClickListener {
@@ -62,9 +61,5 @@ class LoginActivity : AppCompatActivity() {
         })
 
         textCreateFamily.setOnClickListener { finish() }
-
-        vm.userLive.observe(this@LoginActivity) {
-            buttonLogin.text = it
-        }
     }
 }

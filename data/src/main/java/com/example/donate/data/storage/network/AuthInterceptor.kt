@@ -1,6 +1,7 @@
 package com.example.donate.data.storage.network
 
 import android.content.Context
+import android.util.Log
 import com.example.donate.data.storage.pref.SharedPrefsTokenStorage
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -13,9 +14,9 @@ class AuthInterceptor(context: Context) : Interceptor {
 
         sharedPrefsTokenStorage.fetchAuthToken()?.let {
             requestBuilder.addHeader("Authorization", it)
+            Log.d("info", "add token: $it")
         }
 
         return chain.proceed(requestBuilder.build())
     }
-
 }

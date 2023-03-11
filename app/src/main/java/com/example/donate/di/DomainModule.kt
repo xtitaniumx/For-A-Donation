@@ -9,18 +9,18 @@ val domainModule = module {
     }
 
     factory {
-        AuthByPhoneUseCase(userRepository = get())
+        AuthByTokenUseCase(userRepository = get())
     }
 
     factory {
-        TestAuthUseCase(userRepository = get())
-    }
-
-    factory {
-        CreateFamilyUseCase()
+        GetAllUserTasksUseCase(taskRepository = get())
     }
 
     factory {
         JoinToFamilyUseCase()
+    }
+
+    factory {
+        RegisterUserUseCase(userRepository = get())
     }
 }

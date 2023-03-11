@@ -26,11 +26,11 @@ class SearchActivity : AppCompatActivity(), SearchTaskAdapter.OnClickListener {
             layoutManager = LinearLayoutManager(this@SearchActivity)
             adapter = tasksAdapter
         }
-        tasksAdapter.submitList(listOf(
+        /*tasksAdapter.submitList(listOf(
             TaskItem(name = "Header 1", desc = "Desc 1", icon = R.drawable.ic_tasks),
             TaskItem(name = "Header 2", desc = "Desc 2", icon = R.drawable.ic_tasks),
             TaskItem(name = "Header 3", desc = "Desc 3", icon = R.drawable.ic_tasks)
-        ))
+        ))*/
     }
 
     override fun onTaskClick(item: TaskItem) {

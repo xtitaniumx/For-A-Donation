@@ -16,8 +16,9 @@ class TaskAdapter : ListAdapter<TaskItem, TaskAdapter.Holder>(Comparator()) {
 
         fun bind(item: TaskItem) = with(binding) {
             textTaskName.text = item.name
-            textTaskDesc.text = item.desc
-            imageTask.setImageResource(item.icon)
+            textTaskDesc.text = item.description
+            if (item.isFinished) imageTask.setImageResource(R.drawable.ic_tasks)
+            else imageTask.setImageResource(R.drawable.ic_time)
         }
     }
 

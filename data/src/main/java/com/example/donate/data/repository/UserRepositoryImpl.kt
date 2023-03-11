@@ -1,48 +1,53 @@
 package com.example.donate.data.repository
 
 import com.example.donate.data.storage.UserStorage
-import com.example.donate.data.storage.model.request.AuthFamilyRequest
-import com.example.donate.data.storage.model.request.TestAuthRequest
-import com.example.donate.data.storage.model.response.TestAuthResponse
-import com.example.donate.domain.model.AuthFamilyParam
-import com.example.donate.domain.model.TestAuthParam
-import com.example.donate.domain.model.TestUserItem
+import com.example.donate.data.storage.model.request.RegisterUserRequest
+import com.example.donate.data.storage.model.response.RegisterUserResponse
+import com.example.donate.domain.model.RegisterUserParam
+import com.example.donate.domain.model.UserItem
+import com.example.donate.domain.model.UserProgressItem
 import com.example.donate.domain.repository.UserRepository
 
 class UserRepositoryImpl(private val userStorage: UserStorage) : UserRepository {
-    override fun authByPhone(param: AuthFamilyParam) {
-        userStorage.auth(mapToStorage(param))
+    override suspend fun registerUser(param: RegisterUserParam): UserItem {
+        val user = userStorage.register(mapToStorage(registerUserParam = param))
+        return mapToDomain(userResponse = user)
     }
 
-    override suspend fun testAuth(param: TestAuthParam): TestUserItem? {
-        val testUser = userStorage.authTest(mapToStorage(param))
-        return testUser?.let { mapToDomain(it) }
+    override fun authByToken(): Boolean {
+        return userStorage.auth()
     }
 
-    private fun mapToStorage(loginFamilyParam: AuthFamilyParam): AuthFamilyRequest {
-        return AuthFamilyRequest(
-            phone = loginFamilyParam.phone,
-            password = loginFamilyParam.password
+    private fun mapToDomain(userResponse: RegisterUserResponse): UserItem {
+        val userProgressList = java.util.ArrayList<UserProgressItem>()
+        userResponse.progress.forEach {
+            userProgressList.add(UserProgressItem(
+                id = it.id,
+                points = it.points,
+                categoryOfTask = it.categoryOfTask
+            ))
+        }
+
+        return UserItem(
+            id = userResponse.id,
+            name = userResponse.name,
+            phoneNumber = userResponse.phoneNumber,
+            gender = userResponse.gender,
+            role = userResponse.role,
+            familyId = userResponse.familyId,
+            progress = userProgressList
         )
     }
 
-    private fun mapToStorage(testAuthParam: TestAuthParam): TestAuthRequest {
-        return TestAuthRequest(
-            username = testAuthParam.username,
-            password = testAuthParam.password
-        )
-    }
-
-    private fun mapToDomain(testAuthResponse: TestAuthResponse): TestUserItem {
-        return TestUserItem(
-            id = testAuthResponse.id,
-            username = testAuthResponse.username,
-            email = testAuthResponse.email,
-            firstName = testAuthResponse.firstName,
-            lastName = testAuthResponse.lastName,
-            gender = testAuthResponse.gender,
-            image = testAuthResponse.image,
-            token = testAuthResponse.token
+    private fun mapToStorage(registerUserParam: RegisterUserParam): RegisterUserRequest {
+        return RegisterUserRequest(
+            name = registerUserParam.name,
+            phoneNumber = registerUserParam.phoneNumber,
+            password = registerUserParam.password,
+            passwordConfirm = registerUserParam.passwordConfirm,
+            gender = registerUserParam.gender,
+            role = registerUserParam.role,
+            familyId = registerUserParam.familyId
         )
     }
 }

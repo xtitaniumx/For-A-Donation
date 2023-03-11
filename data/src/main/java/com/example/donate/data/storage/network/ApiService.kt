@@ -1,18 +1,19 @@
 package com.example.donate.data.storage.network
 
-import com.example.donate.data.storage.model.request.AuthFamilyRequest
-import com.example.donate.data.storage.model.request.TestAuthRequest
-import com.example.donate.data.storage.model.response.AuthFamilyResponse
-import com.example.donate.data.storage.model.response.TestAuthResponse
+import com.example.donate.data.storage.model.request.RegisterUserRequest
+import com.example.donate.data.storage.model.response.RegisterUserResponse
+import com.example.donate.data.storage.model.response.TaskResponse
 import retrofit2.Call
 import retrofit2.http.Body
-import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
+import retrofit2.http.Header
+import retrofit2.http.Headers
 import retrofit2.http.POST
 
 interface ApiService {
     @POST("/api/User/Registration")
-    fun auth(@Body request: AuthFamilyRequest): Call<AuthFamilyResponse>
+    fun registerUser(@Body request: RegisterUserRequest): Call<RegisterUserResponse>
 
-    @POST("auth/login")
-    fun authTest(@Body request: TestAuthRequest): Call<TestAuthResponse>
+    @GET("/api/Task/GetAll")
+    fun getUserTasks(): Call<List<TaskResponse>>
 }

@@ -2,12 +2,13 @@ package com.example.donate.data.storage.network
 
 import android.content.Context
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class ApiClient {
     private lateinit var apiService: ApiService
-    private val url = "http://10.0.2.2:8080"
+    private val url = "https://3f07-95-191-15-104.eu.ngrok.io"
 
     fun getApiService(context: Context): ApiService {
         if (!::apiService.isInitialized) {
@@ -23,7 +24,13 @@ class ApiClient {
     }
 
     private fun okHttpClient(context: Context): OkHttpClient {
+        // Код для debug версии приложения
+        val httpLoggingInterceptor = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+
         return OkHttpClient.Builder()
+            .addInterceptor(httpLoggingInterceptor)
             .addInterceptor(AuthInterceptor(context))
             .build()
     }

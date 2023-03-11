@@ -1,6 +1,6 @@
-package com.example.donate.domain.model
+package com.example.donate.data.storage.model.response
 
-data class TaskItem(
+data class TaskResponse(
     val id: String,
     val name: String,
     val description: String,

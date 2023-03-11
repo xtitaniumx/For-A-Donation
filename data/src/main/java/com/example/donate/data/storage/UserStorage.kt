@@ -1,11 +1,10 @@
 package com.example.donate.data.storage
 
-import com.example.donate.data.storage.model.request.AuthFamilyRequest
-import com.example.donate.data.storage.model.request.TestAuthRequest
-import com.example.donate.data.storage.model.response.TestAuthResponse
+import com.example.donate.data.storage.model.request.RegisterUserRequest
+import com.example.donate.data.storage.model.response.RegisterUserResponse
 
 interface UserStorage {
-    fun auth(param: AuthFamilyRequest)
+    suspend fun register(param: RegisterUserRequest): RegisterUserResponse
 
-    suspend fun authTest(param: TestAuthRequest): TestAuthResponse?
+    fun auth(): Boolean
 }

@@ -11,12 +11,13 @@ import com.example.donate.R
 import com.example.donate.databinding.FragmentTasksBinding
 import com.example.donate.domain.model.TaskItem
 import com.example.donate.presentation.adapter.TaskAdapter
+import com.example.donate.presentation.vm.TasksViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TasksFragment : Fragment() {
+    private val vm by viewModel<TasksViewModel>()
     private lateinit var binding: FragmentTasksBinding
     private val taskAdapter by lazy { TaskAdapter() }
-    private val list = ArrayList<TaskItem>()
-    private var listNum = 1
 
     companion object {
         @JvmStatic
@@ -55,10 +56,15 @@ class TasksFragment : Fragment() {
             TaskItem(name = "Header 3", desc = "Desc 3", R.drawable.ic_tasks)
         ))*/
 
+        vm.getAllTasks()
+
+        vm.tasksListLive.observe(viewLifecycleOwner) {
+            taskAdapter.submitList(it)
+        }
+
         fabNewTask.setOnClickListener {
-            list.add(TaskItem(name = "Header $listNum", desc = "Desc $listNum", R.drawable.ic_tasks))
-            listNum++
-            taskAdapter.submitList(list.toMutableList())
+
+            //taskAdapter.submitList(list.toMutableList())
             val intent = Intent(requireActivity(), NewTaskActivity::class.java)
             startActivity(intent)
         }

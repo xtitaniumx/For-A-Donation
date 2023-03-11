@@ -1,15 +1,15 @@
 package com.example.donate.presentation
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.donate.databinding.ActivityRegisterBinding
-import com.google.mlkit.vision.barcode.common.Barcode
-import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions
-import com.google.mlkit.vision.codescanner.GmsBarcodeScanning
+import com.example.donate.presentation.vm.LoginViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RegisterActivity : AppCompatActivity() {
+    private val vm by viewModel<LoginViewModel>()
     private lateinit var binding: ActivityRegisterBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,27 +20,33 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun init() = with(binding) {
+        buttonCreateFamily.setOnClickListener {
+            val intent = Intent(this@RegisterActivity, CreateFamilyActivity::class.java)
+            startActivity(intent)
+        }
+
         buttonJoinToFamily.setOnClickListener {
-            val options = GmsBarcodeScannerOptions.Builder()
-                .setBarcodeFormats(Barcode.FORMAT_QR_CODE)
-                .build()
-            val scanner = GmsBarcodeScanning.getClient(this@RegisterActivity, options)
-            scanner.startScan()
-                .addOnSuccessListener { barcode ->
-                    val rawValue: String? = barcode.rawValue
-                    Toast.makeText(this@RegisterActivity, rawValue, Toast.LENGTH_LONG).show()
-                }
-                .addOnCanceledListener {
-                    // Task canceled
-                }
-                .addOnFailureListener { e ->
-                    // Task failed with an exception
-                }
+            val intent = Intent(this@RegisterActivity, QrScannerActivity::class.java)
+            startActivity(intent)
         }
 
         textSignIn.setOnClickListener {
-            val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
-            startActivity(intent)
+            vm.authUser()
+        }
+
+        vm.tokenIsExistLive.observe(this@RegisterActivity) {
+            if (it) {
+                val intent = Intent(this@RegisterActivity, MainActivity::class.java)
+                startActivity(intent)
+            } else {
+                MaterialAlertDialogBuilder(this@RegisterActivity)
+                    .setTitle("Не удалось войти в аккаунт")
+                    .setMessage("Сначала нужно зарегистрироваться")
+                    .setNeutralButton("ОК") { dialog, which ->
+                        dialog.cancel()
+                    }
+                    .show()
+            }
         }
     }
 }

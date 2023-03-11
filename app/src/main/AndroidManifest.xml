@@ -3,10 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
-    <meta-data
-        android:name="com.google.mlkit.vision.DEPENDENCIES"
-        android:value="barcode_ui" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".app.App"
@@ -19,6 +16,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Donate"
         tools:targetApi="31">
+        <activity
+            android:name=".presentation.CreateFamilyActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Donate.NoActionBar" />
+        <activity
+            android:name=".presentation.QrScannerActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Donate.NoActionBar" />
         <activity
             android:name=".presentation.SearchActivity"
             android:exported="false"

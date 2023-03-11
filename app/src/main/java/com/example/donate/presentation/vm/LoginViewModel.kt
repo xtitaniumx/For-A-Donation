@@ -4,27 +4,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.donate.domain.model.AuthFamilyParam
-import com.example.donate.domain.model.TestAuthParam
-import com.example.donate.domain.usecase.AuthByPhoneUseCase
-import com.example.donate.domain.usecase.TestAuthUseCase
+import com.example.donate.domain.usecase.AuthByTokenUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class LoginViewModel(private val testAuthUseCase: TestAuthUseCase, private val authByPhoneUseCase: AuthByPhoneUseCase) : ViewModel() {
-    private val testUserMutable = MutableLiveData<String?>()
+class LoginViewModel(private val authByTokenUseCase: AuthByTokenUseCase) : ViewModel() {
+    private val tokenIsExistMutable = MutableLiveData<Boolean>()
 
-    val userLive: LiveData<String?> = testUserMutable
+    val tokenIsExistLive: LiveData<Boolean> = tokenIsExistMutable
 
-    fun authUser(name: String, password: String) {
-        viewModelScope.launch {
-            val user = withContext(Dispatchers.IO) {
-                authByPhoneUseCase(
-                    AuthFamilyParam(phone = name, password = password)
-                )
-            }
-            //testUserMutable.value = user
-        }
+    fun authUser() {
+        tokenIsExistMutable.value = authByTokenUseCase()
     }
 }
