@@ -2,7 +2,7 @@ package com.example.donate.data.storage.model.response
 
 import com.example.donate.data.storage.model.UserProgress
 
-data class RegisterUserResponse(
+data class UserResponse(
     val id: String,
     val name: String,
     val phoneNumber: String,

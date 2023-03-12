@@ -1,5 +1,6 @@
 package com.example.donate.domain.model
 
 data class FamilyItem(
-    val members: List<Int>
+    val id: String,
+    val members: List<FamilyMemberItem>
 )

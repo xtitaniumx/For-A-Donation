@@ -11,6 +11,7 @@ import com.example.donate.R
 import com.example.donate.databinding.FragmentTasksBinding
 import com.example.donate.domain.model.TaskItem
 import com.example.donate.presentation.adapter.TaskAdapter
+import com.example.donate.presentation.util.ArgumentConstants
 import com.example.donate.presentation.vm.TasksViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -18,10 +19,26 @@ class TasksFragment : Fragment() {
     private val vm by viewModel<TasksViewModel>()
     private lateinit var binding: FragmentTasksBinding
     private val taskAdapter by lazy { TaskAdapter() }
+    private var userId: String? = null
+    private var familyId: String? = null
 
     companion object {
         @JvmStatic
-        fun newInstance() = TasksFragment()
+        fun newInstance(userId: String?, familyId: String?) = TasksFragment().apply {
+            arguments = Bundle().apply {
+                putString(ArgumentConstants.USER_ID, userId)
+                putString(ArgumentConstants.FAMILY_ID, familyId)
+            }
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            userId = it.getString(ArgumentConstants.USER_ID)
+            familyId = it.getString(ArgumentConstants.FAMILY_ID)
+        }
+        vm.getAllTasks()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -49,23 +66,14 @@ class TasksFragment : Fragment() {
             adapter = taskAdapter
         }
 
-        // Здесь будет потом получение данных с сервера, через observer
-        /*taskAdapter.submitList(listOf(
-            TaskItem(name = "Header 1", desc = "Desc 1", R.drawable.ic_tasks),
-            TaskItem(name = "Header 2", desc = "Desc 2", R.drawable.ic_tasks),
-            TaskItem(name = "Header 3", desc = "Desc 3", R.drawable.ic_tasks)
-        ))*/
-
-        vm.getAllTasks()
-
         vm.tasksListLive.observe(viewLifecycleOwner) {
             taskAdapter.submitList(it)
         }
 
         fabNewTask.setOnClickListener {
-
-            //taskAdapter.submitList(list.toMutableList())
             val intent = Intent(requireActivity(), NewTaskActivity::class.java)
+            intent.putExtra(ArgumentConstants.USER_ID, userId)
+            intent.putExtra(ArgumentConstants.FAMILY_ID, familyId)
             startActivity(intent)
         }
     }

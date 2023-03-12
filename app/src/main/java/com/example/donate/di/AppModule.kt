@@ -21,6 +21,10 @@ val appModule = module {
     }
 
     viewModel {
-        TasksViewModel(getAllUserTasksUseCase = get())
+        TasksViewModel(
+            getAllUserTasksUseCase = get(),
+            getFamilyByIdUseCase = get(),
+            addNewTaskUseCase = get()
+        )
     }
 }

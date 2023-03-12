@@ -9,11 +9,19 @@ val domainModule = module {
     }
 
     factory {
+        AddNewTaskUseCase(taskRepository = get())
+    }
+
+    factory {
         AuthByTokenUseCase(userRepository = get())
     }
 
     factory {
         GetAllUserTasksUseCase(taskRepository = get())
+    }
+
+    factory {
+        GetFamilyByIdUseCase(familyRepository = get())
     }
 
     factory {

@@ -2,10 +2,11 @@ package com.example.donate.data.storage.network
 
 import android.content.Context
 import com.example.donate.data.storage.TaskStorage
-import com.example.donate.data.storage.TokenStorage
+import com.example.donate.data.storage.UserDataStorage
+import com.example.donate.data.storage.model.request.AddTaskRequest
 import com.example.donate.data.storage.model.response.TaskResponse
 
-class NetworkTaskStorage(context: Context, apiClient: ApiClient, private val tokenStorage: TokenStorage) : TaskStorage {
+class NetworkTaskStorage(context: Context, apiClient: ApiClient) : TaskStorage {
     private val apiService = apiClient.getApiService(context)
 
     override suspend fun getAll(): List<TaskResponse> {
@@ -14,5 +15,13 @@ class NetworkTaskStorage(context: Context, apiClient: ApiClient, private val tok
             return response.body()!!
         }
         return emptyList()
+    }
+
+    override suspend fun add(request: AddTaskRequest): TaskResponse? {
+        val response = apiService.addTask(request).execute()
+        if (response.isSuccessful) {
+            return response.body()!!
+        }
+        return null
     }
 }

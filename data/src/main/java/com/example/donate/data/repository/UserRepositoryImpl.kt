@@ -2,7 +2,7 @@ package com.example.donate.data.repository
 
 import com.example.donate.data.storage.UserStorage
 import com.example.donate.data.storage.model.request.RegisterUserRequest
-import com.example.donate.data.storage.model.response.RegisterUserResponse
+import com.example.donate.data.storage.model.response.UserResponse
 import com.example.donate.domain.model.RegisterUserParam
 import com.example.donate.domain.model.UserItem
 import com.example.donate.domain.model.UserProgressItem
@@ -18,7 +18,7 @@ class UserRepositoryImpl(private val userStorage: UserStorage) : UserRepository 
         return userStorage.auth()
     }
 
-    private fun mapToDomain(userResponse: RegisterUserResponse): UserItem {
+    private fun mapToDomain(userResponse: UserResponse): UserItem {
         val userProgressList = java.util.ArrayList<UserProgressItem>()
         userResponse.progress.forEach {
             userProgressList.add(UserProgressItem(
