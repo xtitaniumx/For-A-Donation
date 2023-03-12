@@ -37,9 +37,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingStart="12dp"
+            android:paddingStart="10dp"
             android:paddingTop="8dp"
-            android:paddingEnd="12dp"
+            android:paddingEnd="10dp"
             android:paddingBottom="12dp">
 
             <com.google.android.material.progressindicator.CircularProgressIndicator
@@ -56,18 +56,34 @@
                 app:trackCornerRadius="5dp"
                 app:trackThickness="11dp" />
 
-            <TextView
-                android:id="@+id/textGoalProgress"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/manrope_bold"
-                android:textSize="24sp"
-                android:textColor="?attr/colorOnPrimaryContainer"
+                android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="@+id/progressGoal"
                 app:layout_constraintEnd_toEndOf="@+id/progressGoal"
                 app:layout_constraintStart_toStartOf="@+id/progressGoal"
                 app:layout_constraintTop_toTopOf="@+id/progressGoal"
-                tools:text="@string/goal_progress_pattern" />
+                app:layout_constraintVertical_bias="0.48000002">
+
+                <TextView
+                    android:id="@+id/textGoalProgress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_bold"
+                    android:textColor="?attr/colorOnPrimaryContainer"
+                    android:textSize="28sp"
+                    tools:text="20" />
+
+                <TextView
+                    android:id="@+id/textGoalTotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_medium"
+                    android:textColor="?attr/colorOnPrimaryContainer"
+                    android:textSize="14sp"
+                    tools:text="/30" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/textGoal"
