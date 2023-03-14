@@ -30,7 +30,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="14dp"
             android:background="@drawable/bg_edit_text"
             android:ems="10"
@@ -158,7 +158,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="18dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/manrope_medium"
             android:text="Выберите роль в семье"
             android:textColor="?attr/colorOnBackground"
@@ -171,8 +171,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="16dp"
+            android:scrollbars="none"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textSelectRole">
@@ -182,6 +183,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 app:checkedChip="@id/chipFather"
+                app:selectionRequired="true"
                 app:singleLine="true"
                 app:singleSelection="true">
 

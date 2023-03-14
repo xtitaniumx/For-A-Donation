@@ -116,7 +116,7 @@ class CreateFamilyActivity : AppCompatActivity() {
             MaterialAlertDialogBuilder(this@CreateFamilyActivity)
                 .setTitle("Ошибка регистрации")
                 .setMessage(it.joinToString(separator = "\n"))
-                .setNeutralButton("ОК") { dialog, which ->
+                .setPositiveButton("ОК") { dialog, which ->
                     dialog.cancel()
                 }
                 .show()
@@ -124,8 +124,6 @@ class CreateFamilyActivity : AppCompatActivity() {
 
         vm.userLive.observe(this@CreateFamilyActivity) {
             val intent = Intent(this@CreateFamilyActivity, MainActivity::class.java)
-            intent.putExtra(ArgumentConstants.USER_ID, it.id)
-            intent.putExtra(ArgumentConstants.FAMILY_ID, it.familyId)
             startActivity(intent)
         }
     }

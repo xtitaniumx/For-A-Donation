@@ -12,10 +12,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val fragmentList by lazy {
         listOf(
-            TasksFragment.newInstance(
-                userId = intent.getStringExtra(ArgumentConstants.USER_ID),
-                familyId = intent.getStringExtra(ArgumentConstants.FAMILY_ID)
-            )
+            TasksFragment.newInstance(),
+            FamilyFragment.newInstance()
         )
     }
     private var activeFragment: Fragment? = null
@@ -32,6 +30,9 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.navItemTasks -> {
                     openFragment(fragmentList[0])
+                }
+                R.id.navItemFamily -> {
+                    openFragment(fragmentList[1])
                 }
             }
             return@setOnItemSelectedListener true

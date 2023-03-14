@@ -7,7 +7,7 @@ import com.example.donate.domain.repository.UserRepository
 class RegisterUserUseCase(private val userRepository: UserRepository) {
     private val errorMessages = ArrayList<String>()
 
-    suspend operator fun invoke(registerUserParam: RegisterUserParam): Any {
+    suspend operator fun invoke(registerUserParam: RegisterUserParam): Any? {
         errorMessages.clear()
         validateName(registerUserParam.name)
         validatePassword(registerUserParam.password, registerUserParam.passwordConfirm)

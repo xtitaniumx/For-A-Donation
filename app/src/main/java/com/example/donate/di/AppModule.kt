@@ -13,7 +13,10 @@ val appModule = module {
     }
 
     viewModel {
-        LoginViewModel(authByTokenUseCase = get())
+        LoginViewModel(
+            authByTokenUseCase = get(),
+            authByPhoneUseCase = get()
+        )
     }
 
     viewModel {
@@ -24,6 +27,8 @@ val appModule = module {
         TasksViewModel(
             getAllUserTasksUseCase = get(),
             getFamilyByIdUseCase = get(),
+            getFamilyIdUseCase = get(),
+            getUserIdUseCase = get(),
             addNewTaskUseCase = get()
         )
     }

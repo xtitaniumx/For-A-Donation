@@ -6,7 +6,9 @@ import android.text.method.PasswordTransformationMethod
 import androidx.appcompat.app.AppCompatActivity
 import com.example.donate.R
 import com.example.donate.databinding.ActivityLoginBinding
+import com.example.donate.presentation.util.ArgumentConstants
 import com.example.donate.presentation.vm.LoginViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mindorks.editdrawabletext.DrawablePosition
 import com.mindorks.editdrawabletext.onDrawableClickListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -25,7 +27,20 @@ class LoginActivity : AppCompatActivity() {
 
     private fun init() = with(binding) {
         buttonLogin.setOnClickListener {
-            //vm.authUser(editTextPhone.text.toString(), editTextPassword.text.toString())
+            vm.authUser(editTextPhone.text.toString(), editTextPassword.text.toString())
+        }
+
+        vm.errorMessageLive.observe(this@LoginActivity) {
+            MaterialAlertDialogBuilder(this@LoginActivity)
+                .setTitle("Ошибка входа в аккаунт")
+                .setMessage(it.joinToString(separator = "\n"))
+                .setPositiveButton("ОК") { dialog, which ->
+                    dialog.cancel()
+                }
+                .show()
+        }
+
+        vm.userLive.observe(this@LoginActivity) {
             val intent = Intent(this@LoginActivity, MainActivity::class.java)
             startActivity(intent)
         }

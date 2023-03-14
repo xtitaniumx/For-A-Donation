@@ -8,9 +8,7 @@ import com.example.donate.domain.model.AddNewTaskParam
 import com.example.donate.domain.model.FamilyItem
 import com.example.donate.domain.model.GetFamilyParam
 import com.example.donate.domain.model.TaskItem
-import com.example.donate.domain.usecase.AddNewTaskUseCase
-import com.example.donate.domain.usecase.GetAllUserTasksUseCase
-import com.example.donate.domain.usecase.GetFamilyByIdUseCase
+import com.example.donate.domain.usecase.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -18,6 +16,8 @@ import kotlinx.coroutines.withContext
 class TasksViewModel(
     private val getAllUserTasksUseCase: GetAllUserTasksUseCase,
     private val getFamilyByIdUseCase: GetFamilyByIdUseCase,
+    private val getFamilyIdUseCase: GetFamilyIdUseCase,
+    private val getUserIdUseCase: GetUserIdUseCase,
     private val addNewTaskUseCase: AddNewTaskUseCase
 ) : ViewModel() {
     private val tasksListMutable = MutableLiveData<List<TaskItem>?>()
@@ -40,20 +40,26 @@ class TasksViewModel(
         }
     }
 
-    fun getFamilyById(familyId: String) {
+    fun getFamilyById() {
         viewModelScope.launch {
-            familyMutable.value = withContext(Dispatchers.IO) {
-                getFamilyByIdUseCase(GetFamilyParam(id = familyId))
+            val familyId = getFamilyIdUseCase()
+            familyId?.let {
+                familyMutable.value = withContext(Dispatchers.IO) {
+                    getFamilyByIdUseCase(GetFamilyParam(id = familyId))
+                }
             }
         }
     }
 
-    fun addNewTask(name: String, desc: String, executorId: String, customerId: String, points: Int, category: Int, dateTimeFinish: String) {
+    fun addNewTask(name: String, desc: String, executorId: String, points: Int, category: Int, dateTimeFinish: String) {
         viewModelScope.launch {
-            taskMutable.value = withContext(Dispatchers.IO) {
-                addNewTaskUseCase(AddNewTaskParam(
-                    name, desc, executorId, customerId, points, category, dateTimeFinish
-                ))
+            val customerId = getUserIdUseCase()
+            customerId?.let {
+                taskMutable.value = withContext(Dispatchers.IO) {
+                    addNewTaskUseCase(AddNewTaskParam(
+                        name, desc, executorId, customerId, points, category, dateTimeFinish
+                    ))
+                }
             }
         }
     }

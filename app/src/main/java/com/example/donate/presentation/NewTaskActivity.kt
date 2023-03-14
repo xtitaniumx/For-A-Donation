@@ -29,7 +29,7 @@ class NewTaskActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        intent.getStringExtra(ArgumentConstants.FAMILY_ID)?.let { vm.getFamilyById(it) }
+        vm.getFamilyById()
         binding = ActivityNewTaskBinding.inflate(layoutInflater)
         init()
         setContentView(binding.root)
@@ -55,7 +55,7 @@ class NewTaskActivity : AppCompatActivity() {
             .build()
 
         datePicker.addOnPositiveButtonClickListener {
-            val formatter = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
+            val formatter = SimpleDateFormat("yyyy.MM.dd", Locale.getDefault())
             editTextDate.setText("Дата: " + formatter.format(Date(it)))
         }
 
@@ -97,17 +97,14 @@ class NewTaskActivity : AppCompatActivity() {
             vm.addNewTask(
                 name = editTextTaskName.text.toString(),
                 desc = editTextTaskDesc.text.toString(),
-                executorId = executorList[chipGroupFamilyMembers.checkedChipId],
-                customerId = intent.getStringExtra(ArgumentConstants.USER_ID)!!,
+                //executorId = executorList[chipGroupFamilyMembers.checkedChipId],
+                executorId = "CCF76232-AC6A-4B51-A80E-8C77D0612E76", // для примера
                 points = sliderReward.value.toInt(),
                 category = 0,
                 dateTimeFinish = vm.dateTimeLive.value!!
             )
         }
     }
-
-    // перенести во viewModel
-
 
     private fun addChip(id: Int, text: String, icon: Int): Chip {
         val chip = Chip(this)

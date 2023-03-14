@@ -39,13 +39,8 @@ class RegisterActivity : AppCompatActivity() {
                 val intent = Intent(this@RegisterActivity, MainActivity::class.java)
                 startActivity(intent)
             } else {
-                MaterialAlertDialogBuilder(this@RegisterActivity)
-                    .setTitle("Не удалось войти в аккаунт")
-                    .setMessage("Сначала нужно зарегистрироваться")
-                    .setNeutralButton("ОК") { dialog, which ->
-                        dialog.cancel()
-                    }
-                    .show()
+                val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+                startActivity(intent)
             }
         }
     }

@@ -19,25 +19,14 @@ class TasksFragment : Fragment() {
     private val vm by viewModel<TasksViewModel>()
     private lateinit var binding: FragmentTasksBinding
     private val taskAdapter by lazy { TaskAdapter() }
-    private var userId: String? = null
-    private var familyId: String? = null
 
     companion object {
         @JvmStatic
-        fun newInstance(userId: String?, familyId: String?) = TasksFragment().apply {
-            arguments = Bundle().apply {
-                putString(ArgumentConstants.USER_ID, userId)
-                putString(ArgumentConstants.FAMILY_ID, familyId)
-            }
-        }
+        fun newInstance() = TasksFragment()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            userId = it.getString(ArgumentConstants.USER_ID)
-            familyId = it.getString(ArgumentConstants.FAMILY_ID)
-        }
         vm.getAllTasks()
     }
 
@@ -72,8 +61,6 @@ class TasksFragment : Fragment() {
 
         fabNewTask.setOnClickListener {
             val intent = Intent(requireActivity(), NewTaskActivity::class.java)
-            intent.putExtra(ArgumentConstants.USER_ID, userId)
-            intent.putExtra(ArgumentConstants.FAMILY_ID, familyId)
             startActivity(intent)
         }
     }

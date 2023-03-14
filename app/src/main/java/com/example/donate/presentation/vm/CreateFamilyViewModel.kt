@@ -12,8 +12,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class CreateFamilyViewModel(private val registerUserUseCase: RegisterUserUseCase) : ViewModel() {
-    private val userMutable = MutableLiveData<UserItem>()
-    val userLive: LiveData<UserItem> = userMutable
+    private val userMutable = MutableLiveData<UserItem?>()
+    val userLive: LiveData<UserItem?> = userMutable
 
     private val errorMessageMutable = MutableLiveData<List<String>>()
     val errorMessageLive: LiveData<List<String>> = errorMessageMutable

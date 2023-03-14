@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ApiClient {
     private lateinit var apiService: ApiService
-    private val url = "https://0789-95-191-15-104.eu.ngrok.io"
+    private val url = "http://10.0.2.2:5190"
 
     fun getApiService(context: Context): ApiService {
         if (!::apiService.isInitialized) {

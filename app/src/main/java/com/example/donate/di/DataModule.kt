@@ -31,7 +31,10 @@ val dataModule = module {
     }
 
     single<UserRepository> {
-        UserRepositoryImpl(userStorage = get())
+        UserRepositoryImpl(
+            userStorage = get(),
+            userDataStorage = get()
+        )
     }
 
     single<TaskStorage> {
