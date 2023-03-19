@@ -21,9 +21,11 @@ class CreateFamilyViewModel(private val registerUserUseCase: RegisterUserUseCase
     fun registerUser(name: String, phoneNumber: String, password: String, passwordConfirm: String, gender: Int, role: Int) {
         viewModelScope.launch {
             val registerResult = withContext(Dispatchers.IO) {
-                registerUserUseCase(RegisterUserParam(
-                    name, phoneNumber, password, passwordConfirm, gender, role, null
-                ))
+                registerUserUseCase(
+                    RegisterUserParam(
+                        name, phoneNumber, password, passwordConfirm, gender, role, null
+                    )
+                )
             }
             when (registerResult) {
                 is UserItem -> {
@@ -35,6 +37,4 @@ class CreateFamilyViewModel(private val registerUserUseCase: RegisterUserUseCase
             }
         }
     }
-
-
 }

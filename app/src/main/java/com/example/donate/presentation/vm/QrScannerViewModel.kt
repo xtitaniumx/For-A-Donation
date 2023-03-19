@@ -17,8 +17,8 @@ class QrScannerViewModel : ViewModel() {
     fun getValueFromQrCode(list: List<Barcode>) {
         viewModelScope.launch {
             val rawValue = withContext(Dispatchers.IO) {
-                if (list.size == 1) {
-                    list[0].rawValue.toString()
+                if (list.isNotEmpty()) {
+                    list[0].rawValue
                 } else {
                     null
                 }

@@ -2,23 +2,21 @@ package com.example.donate.presentation
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.donate.R
 import com.example.donate.databinding.FragmentTasksBinding
 import com.example.donate.domain.model.TaskItem
 import com.example.donate.presentation.adapter.TaskAdapter
-import com.example.donate.presentation.util.ArgumentConstants
 import com.example.donate.presentation.vm.TasksViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class TasksFragment : Fragment() {
+class TasksFragment : Fragment(), TaskAdapter.OnClickListener {
     private val vm by viewModel<TasksViewModel>()
     private lateinit var binding: FragmentTasksBinding
-    private val taskAdapter by lazy { TaskAdapter() }
+    private val taskAdapter by lazy { TaskAdapter(this) }
 
     companion object {
         @JvmStatic
@@ -63,5 +61,9 @@ class TasksFragment : Fragment() {
             val intent = Intent(requireActivity(), NewTaskActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    override fun onTaskClick(item: TaskItem) {
+
     }
 }

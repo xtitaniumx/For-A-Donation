@@ -4,6 +4,6 @@ import com.example.donate.domain.repository.UserRepository
 
 class GetUserIdUseCase(private val userRepository: UserRepository) {
     operator fun invoke(): String? {
-        return userRepository.getId()
+        return userRepository.getUserId()
     }
 }

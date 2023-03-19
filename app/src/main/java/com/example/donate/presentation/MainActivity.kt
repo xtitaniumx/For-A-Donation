@@ -5,8 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.donate.R
 import com.example.donate.databinding.ActivityMainBinding
-import com.example.donate.presentation.util.ArgumentConstants
-import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -16,7 +14,7 @@ class MainActivity : AppCompatActivity() {
             FamilyFragment.newInstance()
         )
     }
-    private var activeFragment: Fragment? = null
+    private var activeFragment = fragmentList[0]
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +38,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openFragment(fragment: Fragment) {
-        if (activeFragment != null && activeFragment != fragment) {
+        if (activeFragment != fragment) {
             val transaction = supportFragmentManager.beginTransaction()
             transaction.replace(R.id.containerMain, fragment)
             transaction.commit()

@@ -6,7 +6,6 @@ import android.text.method.PasswordTransformationMethod
 import androidx.appcompat.app.AppCompatActivity
 import com.example.donate.R
 import com.example.donate.databinding.ActivityCreateFamilyBinding
-import com.example.donate.presentation.util.ArgumentConstants
 import com.example.donate.presentation.vm.CreateFamilyViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mindorks.editdrawabletext.DrawablePosition
@@ -87,7 +86,7 @@ class CreateFamilyActivity : AppCompatActivity() {
             }
         })
 
-        buttonCreateFamilyNow.setOnClickListener {
+        buttonRegister.setOnClickListener {
             val genderId = when (toggleButtonGender.checkedButtonId) {
                 R.id.buttonGenderMale -> 0
                 R.id.buttonGenderFemale -> 1

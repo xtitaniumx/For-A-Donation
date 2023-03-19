@@ -9,7 +9,9 @@ interface UserRepository {
 
     suspend fun authByPhone(param: AuthByPhoneUserParam): UserItem?
 
-    fun getId(): String?
+    fun authBySavedData(): Boolean
+
+    fun getUserId(): String?
 
     fun getFamilyId(): String?
 }

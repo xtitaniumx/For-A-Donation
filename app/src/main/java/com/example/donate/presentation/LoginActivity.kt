@@ -6,7 +6,6 @@ import android.text.method.PasswordTransformationMethod
 import androidx.appcompat.app.AppCompatActivity
 import com.example.donate.R
 import com.example.donate.databinding.ActivityLoginBinding
-import com.example.donate.presentation.util.ArgumentConstants
 import com.example.donate.presentation.vm.LoginViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mindorks.editdrawabletext.DrawablePosition

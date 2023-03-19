@@ -13,6 +13,4 @@
     <string name="search_by_tasks">Поиск по задачам</string>
     <string name="goal_progress_pattern">6</string>
     <string name="goal">Цель</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

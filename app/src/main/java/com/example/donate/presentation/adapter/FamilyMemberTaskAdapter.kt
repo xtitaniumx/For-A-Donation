@@ -5,31 +5,30 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import androidx.recyclerview.widget.RecyclerView
 import com.example.donate.R
-import com.example.donate.databinding.ItemTaskBinding
+import com.example.donate.databinding.ItemFamilyMemberTaskBinding
 import com.example.donate.domain.model.TaskItem
 
-class SearchTaskAdapter(private val listener: OnClickListener) : ListAdapter<TaskItem, SearchTaskAdapter.Holder>(Comparator()) {
-    interface OnClickListener {
-        fun onTaskClick(item: TaskItem)
+class FamilyMemberTaskAdapter(private val listener: OnChildClickListener) : ListAdapter<TaskItem, FamilyMemberTaskAdapter.Holder>(Comparator()) {
+    interface OnChildClickListener {
+        fun onFamilyMemberTaskClick(item: TaskItem)
     }
 
-    class Holder(itemView: View, private val listener: OnClickListener) : ViewHolder(itemView) {
-        private val binding = ItemTaskBinding.bind(itemView)
+    class Holder(itemView: View, private val listener: OnChildClickListener) : RecyclerView.ViewHolder(itemView) {
+        private val binding = ItemFamilyMemberTaskBinding.bind(itemView)
         private lateinit var taskItem: TaskItem
 
         init {
             binding.root.setOnClickListener {
-                listener.onTaskClick(item = taskItem)
+                listener.onFamilyMemberTaskClick(item = taskItem)
             }
         }
 
         fun bind(item: TaskItem) = with(binding) {
             taskItem = item
             textTaskName.text = item.name
-            //textTaskDesc.text = item.desc
-            //imageTask.setImageResource(item.icon)
+            textTaskDesc.text = item.description
         }
     }
 
@@ -44,7 +43,7 @@ class SearchTaskAdapter(private val listener: OnClickListener) : ListAdapter<Tas
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_task, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_family_member_task, parent, false)
         return Holder(view, listener)
     }
 

@@ -16,7 +16,6 @@ class AuthInterceptor(context: Context) : Interceptor {
         sharedPrefsUserDataStorage.setDataId(PrefDataConstants.USER_TOKEN)
         sharedPrefsUserDataStorage.fetchData()?.let {
             requestBuilder.addHeader("Authorization", it)
-            Log.d("info", "add token: $it")
         }
 
         return chain.proceed(requestBuilder.build())

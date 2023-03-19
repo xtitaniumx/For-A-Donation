@@ -1,11 +1,12 @@
 package com.example.donate.presentation
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import com.example.donate.R
 import com.example.donate.databinding.ActivityNewTaskBinding
-import com.example.donate.presentation.util.ArgumentConstants
+import com.example.donate.presentation.util.IntentConstants
 import com.example.donate.presentation.vm.TasksViewModel
 import com.google.android.material.chip.Chip
 import com.google.android.material.datepicker.CalendarConstraints
@@ -14,35 +15,36 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_CLOCK
 import com.google.android.material.timepicker.TimeFormat
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
 import java.util.*
-import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class NewTaskActivity : AppCompatActivity() {
     private val vm by viewModel<TasksViewModel>()
     private lateinit var binding: ActivityNewTaskBinding
-    private val executorList = ArrayList<String>()
+    private val executorMap = HashMap<Int, String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        vm.getFamilyById()
+        vm.getFamilyMembers(intent.getIntExtra(IntentConstants.MEMBER_ROLE, 0))
         binding = ActivityNewTaskBinding.inflate(layoutInflater)
         init()
         setContentView(binding.root)
     }
 
     private fun init() = with(binding) {
-        vm.familyLive.observe(this@NewTaskActivity) { family ->
-            var chipCount = 0
-            family?.members?.forEach {
-                executorList.add(it.id)
-                chipGroupFamilyMembers.addView(addChip(chipCount, it.name, R.drawable.ic_profile))
-                chipCount++
+        vm.familyMembersLive.observe(this@NewTaskActivity) { familyMembers ->
+            val familyRoles = resources.getStringArray(R.array.family_roles)
+            executorMap.clear()
+            chipGroupFamilyMembers.removeAllViews()
+
+            familyMembers?.forEach {
+                executorMap[it.role] = it.id
+                chipGroupFamilyMembers.addView(addChip(it.role, familyRoles))
             }
+
+            chipGroupFamilyMembers.check(intent.getIntExtra(IntentConstants.MEMBER_ROLE, 0))
         }
 
         val constraintsBuilder = CalendarConstraints.Builder()
@@ -97,20 +99,29 @@ class NewTaskActivity : AppCompatActivity() {
             vm.addNewTask(
                 name = editTextTaskName.text.toString(),
                 desc = editTextTaskDesc.text.toString(),
-                //executorId = executorList[chipGroupFamilyMembers.checkedChipId],
-                executorId = "CCF76232-AC6A-4B51-A80E-8C77D0612E76", // для примера
+                executorId = executorMap[chipGroupFamilyMembers.checkedChipId]!!,
                 points = sliderReward.value.toInt(),
                 category = 0,
                 dateTimeFinish = vm.dateTimeLive.value!!
             )
         }
+
+        vm.taskLive.observe(this@NewTaskActivity) {
+            val data = Intent()
+            data.putExtra(IntentConstants.NEW_TASK_ID, it?.id)
+            setResult(RESULT_OK, data)
+            finish()
+        }
     }
 
-    private fun addChip(id: Int, text: String, icon: Int): Chip {
-        val chip = Chip(this)
-        chip.id = id
-        chip.text = text
-        chip.setChipIconResource(icon)
+    private fun addChip(roleId: Int, rolesCollection: Array<String>): Chip {
+        val chip = Chip(this).apply {
+            id = roleId
+            text = rolesCollection[roleId]
+            isCheckable = true
+            checkedIcon = AppCompatResources.getDrawable(this@NewTaskActivity, R.drawable.ic_checked)
+            isCheckedIconVisible = true
+        }
         return chip
     }
 }

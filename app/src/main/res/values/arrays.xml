@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <array name="repeat_task">
-        <item>Понедельник</item>
-        <item>Вторник</item>
-        <item>Среда</item>
-        <item>Четверг</item>
-        <item>Пятница</item>
-        <item>Суббота</item>
-        <item>Воскресенье</item>
-    </array>
+    <string-array name="family_roles">
+        <item>Папа</item>
+        <item>Мама</item>
+        <item>Сын</item>
+        <item>Дочь</item>
+        <item>Дедушка</item>
+        <item>Бабушка</item>
+    </string-array>
 </resources>

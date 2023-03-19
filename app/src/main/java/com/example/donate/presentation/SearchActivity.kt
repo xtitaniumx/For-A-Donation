@@ -3,15 +3,13 @@ package com.example.donate.presentation
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.donate.R
 import com.example.donate.databinding.ActivitySearchBinding
 import com.example.donate.domain.model.TaskItem
-import com.example.donate.presentation.adapter.SearchTaskAdapter
 import com.example.donate.presentation.adapter.TaskAdapter
 
-class SearchActivity : AppCompatActivity(), SearchTaskAdapter.OnClickListener {
+class SearchActivity : AppCompatActivity(), TaskAdapter.OnClickListener {
     private lateinit var binding: ActivitySearchBinding
-    private val tasksAdapter by lazy { SearchTaskAdapter(this) }
+    private val tasksAdapter by lazy { TaskAdapter(this) }
     private val list = ArrayList<TaskItem>()
     private var listNum = 1
 

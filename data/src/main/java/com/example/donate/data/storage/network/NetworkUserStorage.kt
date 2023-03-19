@@ -15,13 +15,12 @@ class NetworkUserStorage(context: Context, apiClient: ApiClient, private val use
     override suspend fun register(request: RegisterUserRequest): UserResponse? {
         val response = apiService.registerUser(request).execute()
         if (response.isSuccessful) {
-            userDataStorage.setDataId(PrefDataConstants.USER_TOKEN)
-            userDataStorage.saveData(
-                makeToken(login = request.phoneNumber, password = request.password)
-            )
             response.body()?.let {
-                userDataStorage.setDataId(PrefDataConstants.USER_ID)
-                userDataStorage.saveData(it.id)
+                saveUserData(
+                    login = request.phoneNumber,
+                    password = request.password,
+                    userResponse = it
+                )
             }
         }
         return response.body()
@@ -35,20 +34,28 @@ class NetworkUserStorage(context: Context, apiClient: ApiClient, private val use
     override suspend fun auth(request: AuthByPhoneRequest): UserResponse? {
         val response = apiService.authUserByPhone(request).execute()
         if (response.isSuccessful) {
-            userDataStorage.setDataId(PrefDataConstants.USER_TOKEN)
-            userDataStorage.saveData(
-                makeToken(login = request.phoneNumber, password = request.password)
-            )
             response.body()?.let {
                 userDataStorage.setDataId(PrefDataConstants.USER_LOGGED_IN)
                 userDataStorage.saveData(true.toString())
-                userDataStorage.setDataId(PrefDataConstants.USER_ID)
-                userDataStorage.saveData(it.id)
-                userDataStorage.setDataId(PrefDataConstants.FAMILY_ID)
-                it.familyId?.let { id -> userDataStorage.saveData(id) }
+                saveUserData(
+                    login = request.phoneNumber,
+                    password = request.password,
+                    userResponse = it
+                )
             }
         }
         return response.body()
+    }
+
+    private fun saveUserData(login: String, password: String, userResponse: UserResponse) {
+        userDataStorage.setDataId(PrefDataConstants.USER_TOKEN)
+        userDataStorage.saveData(
+            makeToken(login = login, password = password)
+        )
+        userDataStorage.setDataId(PrefDataConstants.USER_ID)
+        userDataStorage.saveData(userResponse.id)
+        userDataStorage.setDataId(PrefDataConstants.FAMILY_ID)
+        userResponse.familyId?.let { id -> userDataStorage.saveData(id) }
     }
 
     private fun makeToken(login: String, password: String): String {

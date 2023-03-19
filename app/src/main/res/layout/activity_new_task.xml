@@ -102,7 +102,7 @@
             android:layout_marginStart="14dp"
             android:layout_marginEnd="14dp"
             app:cardCornerRadius="12dp"
-            app:strokeColor="?attr/colorSecondaryContainer"
+            app:strokeColor="?attr/colorPrimary"
             app:strokeWidth="2dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -129,54 +129,10 @@
                     android:id="@+id/chipGroupFamilyMembers"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:checkedChip="@id/chipFather"
                     app:chipSpacingVertical="0dp"
                     app:selectionRequired="true"
                     app:singleLine="false"
-                    app:singleSelection="true">
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chipFather"
-                        style="@style/Widget.Material3.Chip.Filter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Папа" />
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chipMother"
-                        style="@style/Widget.Material3.Chip.Filter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Мама" />
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chipSon"
-                        style="@style/Widget.Material3.Chip.Filter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Сын" />
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chipDaughter"
-                        style="@style/Widget.Material3.Chip.Filter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Дочь" />
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chipGrandfather"
-                        style="@style/Widget.Material3.Chip.Filter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Дедушка" />
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chipGrandmother"
-                        style="@style/Widget.Material3.Chip.Filter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Бабушка" />
-                </com.google.android.material.chip.ChipGroup>
+                    app:singleSelection="true" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -274,7 +230,7 @@
             android:layout_marginStart="18dp"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/manrope_medium"
-            android:text="Ограничение по времени"
+            android:text="Ограничения по времени"
             android:textColor="?attr/colorOnBackground"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"

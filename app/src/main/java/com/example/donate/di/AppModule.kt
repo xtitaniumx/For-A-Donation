@@ -1,9 +1,6 @@
 package com.example.donate.di
 
-import com.example.donate.presentation.vm.CreateFamilyViewModel
-import com.example.donate.presentation.vm.LoginViewModel
-import com.example.donate.presentation.vm.QrScannerViewModel
-import com.example.donate.presentation.vm.TasksViewModel
+import com.example.donate.presentation.vm.*
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -13,9 +10,24 @@ val appModule = module {
     }
 
     viewModel {
+        FamilyViewModel(
+            getFamilyByIdUseCase = get(),
+            getFamilyIdUseCase = get(),
+            getUserIdUseCase = get(),
+            getTaskByIdUseCase = get(),
+            getTaskByFilterUseCase = get()
+        )
+    }
+
+    viewModel {
+        JoinToFamilyViewModel(registerUserUseCase = get())
+    }
+
+    viewModel {
         LoginViewModel(
             authByTokenUseCase = get(),
-            authByPhoneUseCase = get()
+            authByPhoneUseCase = get(),
+            authBySavedDataUseCase = get()
         )
     }
 
@@ -25,7 +37,7 @@ val appModule = module {
 
     viewModel {
         TasksViewModel(
-            getAllUserTasksUseCase = get(),
+            getAllTasksUseCase = get(),
             getFamilyByIdUseCase = get(),
             getFamilyIdUseCase = get(),
             getUserIdUseCase = get(),

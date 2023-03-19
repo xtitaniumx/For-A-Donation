@@ -10,11 +10,23 @@ import com.example.donate.R
 import com.example.donate.databinding.ItemTaskBinding
 import com.example.donate.domain.model.TaskItem
 
-class TaskAdapter : ListAdapter<TaskItem, TaskAdapter.Holder>(Comparator()) {
-    class Holder(itemView: View) : ViewHolder(itemView) {
+class TaskAdapter(private val listener: OnClickListener) : ListAdapter<TaskItem, TaskAdapter.Holder>(Comparator()) {
+    interface OnClickListener {
+        fun onTaskClick(item: TaskItem)
+    }
+
+    class Holder(itemView: View, private val listener: OnClickListener) : ViewHolder(itemView) {
         private val binding = ItemTaskBinding.bind(itemView)
+        private lateinit var taskItem: TaskItem
+
+        init {
+            binding.root.setOnClickListener {
+                listener.onTaskClick(item = taskItem)
+            }
+        }
 
         fun bind(item: TaskItem) = with(binding) {
+            taskItem = item
             textTaskName.text = item.name
             textTaskDesc.text = item.description
             if (item.isFinished) imageTask.setImageResource(R.drawable.ic_tasks)
@@ -34,7 +46,7 @@ class TaskAdapter : ListAdapter<TaskItem, TaskAdapter.Holder>(Comparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_task, parent, false)
-        return Holder(view)
+        return Holder(view, listener)
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {

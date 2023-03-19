@@ -27,7 +27,12 @@ class UserRepositoryImpl(private val userStorage: UserStorage, private val userD
         return user?.let { mapToDomain(userResponse = it) }
     }
 
-    override fun getId(): String? {
+    override fun authBySavedData(): Boolean {
+        userDataStorage.setDataId(PrefDataConstants.USER_LOGGED_IN)
+        return userDataStorage.fetchData().toBoolean()
+    }
+
+    override fun getUserId(): String? {
         userDataStorage.setDataId(PrefDataConstants.USER_ID)
         return userDataStorage.fetchData()
     }

@@ -5,7 +5,7 @@ import org.koin.dsl.module
 
 val domainModule = module {
     factory {
-        AddFamilyMemberUseCase()
+        AddFamilyMemberUseCase(familyRepository = get())
     }
 
     factory {
@@ -17,11 +17,15 @@ val domainModule = module {
     }
 
     factory {
+        AuthBySavedDataUseCase(userRepository = get())
+    }
+
+    factory {
         AuthByTokenUseCase(userRepository = get())
     }
 
     factory {
-        GetAllUserTasksUseCase(taskRepository = get())
+        GetAllTasksUseCase(taskRepository = get())
     }
 
     factory {
@@ -33,11 +37,15 @@ val domainModule = module {
     }
 
     factory {
-        GetUserIdUseCase(userRepository = get())
+        GetTaskByFilterUseCase(taskRepository = get())
     }
 
     factory {
-        JoinToFamilyUseCase()
+        GetTaskByIdUseCase(taskRepository = get())
+    }
+
+    factory {
+        GetUserIdUseCase(userRepository = get())
     }
 
     factory {

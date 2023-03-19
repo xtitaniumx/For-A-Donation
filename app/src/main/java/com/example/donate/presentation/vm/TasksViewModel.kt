@@ -4,17 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.donate.domain.model.AddNewTaskParam
-import com.example.donate.domain.model.FamilyItem
-import com.example.donate.domain.model.GetFamilyParam
-import com.example.donate.domain.model.TaskItem
+import com.example.donate.domain.model.*
 import com.example.donate.domain.usecase.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class TasksViewModel(
-    private val getAllUserTasksUseCase: GetAllUserTasksUseCase,
+    private val getAllTasksUseCase: GetAllTasksUseCase,
     private val getFamilyByIdUseCase: GetFamilyByIdUseCase,
     private val getFamilyIdUseCase: GetFamilyIdUseCase,
     private val getUserIdUseCase: GetUserIdUseCase,
@@ -23,8 +20,11 @@ class TasksViewModel(
     private val tasksListMutable = MutableLiveData<List<TaskItem>?>()
     val tasksListLive: LiveData<List<TaskItem>?> = tasksListMutable
 
-    private val familyMutable = MutableLiveData<FamilyItem?>()
-    val familyLive: LiveData<FamilyItem?> = familyMutable
+    private val familyIdMutable = MutableLiveData<String?>()
+    val familyIdLive: LiveData<String?> = familyIdMutable
+
+    private val familyMembersMutable = MutableLiveData<List<FamilyMemberItem>?>()
+    val familyMembersLive: LiveData<List<FamilyMemberItem>?> = familyMembersMutable
 
     private val taskMutable = MutableLiveData<TaskItem?>()
     val taskLive: LiveData<TaskItem?> = taskMutable
@@ -35,18 +35,19 @@ class TasksViewModel(
     fun getAllTasks() {
         viewModelScope.launch {
             tasksListMutable.value = withContext(Dispatchers.IO) {
-                getAllUserTasksUseCase()
+                getAllTasksUseCase()
             }
         }
     }
 
-    fun getFamilyById() {
+    fun getFamilyMembers(roleId: Int) {
         viewModelScope.launch {
-            val familyId = getFamilyIdUseCase()
-            familyId?.let {
-                familyMutable.value = withContext(Dispatchers.IO) {
-                    getFamilyByIdUseCase(GetFamilyParam(id = familyId))
+            familyIdMutable.value = getFamilyIdUseCase()
+            familyIdLive.value?.let {
+                val family = withContext(Dispatchers.IO) {
+                    getFamilyByIdUseCase(GetFamilyParam(id = familyIdLive.value!!))
                 }
+                familyMembersMutable.value = family?.members?.filter { it.role == 2 || it.role == 3 }
             }
         }
     }

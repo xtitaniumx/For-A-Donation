@@ -9,5 +9,6 @@ data class TaskResponse(
     val points: Int,
     val categoryOfTask: Int,
     val dateTimeFinish: String,
-    val isFinished: Boolean
+    val isFinished: Boolean,
+    val isPerformed: Boolean
 )
