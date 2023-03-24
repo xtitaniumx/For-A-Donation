@@ -1,6 +1,7 @@
 package com.example.donate.data.storage
 
 import com.example.donate.data.storage.model.request.AuthByPhoneRequest
+import com.example.donate.data.storage.model.request.GetUserByIdRequest
 import com.example.donate.data.storage.model.request.RegisterUserRequest
 import com.example.donate.data.storage.model.response.UserResponse
 
@@ -10,4 +11,6 @@ interface UserStorage {
     fun auth(): Boolean
 
     suspend fun auth(request: AuthByPhoneRequest): UserResponse?
+
+    suspend fun get(request: GetUserByIdRequest): UserResponse?
 }

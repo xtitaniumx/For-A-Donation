@@ -1,9 +1,6 @@
 package com.example.donate.domain.repository
 
-import com.example.donate.domain.model.AddNewTaskParam
-import com.example.donate.domain.model.GetTaskByFilterParam
-import com.example.donate.domain.model.GetTaskByIdParam
-import com.example.donate.domain.model.TaskItem
+import com.example.donate.domain.model.*
 
 interface TaskRepository {
     suspend fun getAllTasks(): List<TaskItem>?
@@ -13,4 +10,6 @@ interface TaskRepository {
     suspend fun getTaskById(param: GetTaskByIdParam): TaskItem?
 
     suspend fun getTaskByFilter(param: GetTaskByFilterParam): List<TaskItem>?
+
+    suspend fun getTaskByName(param: GetTaskByNameParam): List<TaskItem>?
 }

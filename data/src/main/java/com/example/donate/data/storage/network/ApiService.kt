@@ -21,11 +21,17 @@ interface ApiService {
     @POST("/api/User/Authorization")
     fun authUserByPhone(@Body request: AuthByPhoneRequest): Call<UserResponse>
 
+    @GET("/api/User/GetById/{id}")
+    fun getUserById(@Path("id") id: String): Call<UserResponse>
+
     @GET("/api/Task/GetAll")
     fun getAllTasks(): Call<List<TaskResponse>>
 
     @GET("/api/Task/GetById/{id}")
     fun getTaskById(@Path("id") id: String): Call<TaskResponse>
+
+    @GET("/api/Task/GetByName/{name}")
+    fun getTaskByName(@Path("name") name: String): Call<List<TaskResponse>>
 
     @POST("/api/Task/GetByFilter")
     fun getTaskByFilter(@Body request: GetTaskByFilterRequest): Call<List<TaskResponse>>

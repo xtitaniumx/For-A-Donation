@@ -3,12 +3,11 @@ package com.example.donate.presentation
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.content.res.AppCompatResources
 import com.example.donate.R
 import com.example.donate.databinding.ActivityNewTaskBinding
 import com.example.donate.presentation.util.IntentConstants
+import com.example.donate.presentation.util.addChip
 import com.example.donate.presentation.vm.TasksViewModel
-import com.google.android.material.chip.Chip
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -18,7 +17,6 @@ import com.google.android.material.timepicker.TimeFormat
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.HashMap
 
 class NewTaskActivity : AppCompatActivity() {
     private val vm by viewModel<TasksViewModel>()
@@ -41,11 +39,17 @@ class NewTaskActivity : AppCompatActivity() {
 
             familyMembers?.forEach {
                 executorMap[it.role] = it.id
-                chipGroupFamilyMembers.addView(addChip(it.role, familyRoles))
+                chipGroupFamilyMembers.addView(addChip(it.role, familyRoles[it.role]))
             }
 
             chipGroupFamilyMembers.check(intent.getIntExtra(IntentConstants.MEMBER_ROLE, 0))
         }
+
+        val weekDays = resources.getStringArray(R.array.weekdays)
+        weekDays.forEach {
+            chipGroupWeekDay.addView(addChip(weekDays.indexOf(it), it))
+        }
+        chipGroupWeekDay.check(0)
 
         val constraintsBuilder = CalendarConstraints.Builder()
             .setValidator(DateValidatorPointForward.now())
@@ -112,16 +116,5 @@ class NewTaskActivity : AppCompatActivity() {
             setResult(RESULT_OK, data)
             finish()
         }
-    }
-
-    private fun addChip(roleId: Int, rolesCollection: Array<String>): Chip {
-        val chip = Chip(this).apply {
-            id = roleId
-            text = rolesCollection[roleId]
-            isCheckable = true
-            checkedIcon = AppCompatResources.getDrawable(this@NewTaskActivity, R.drawable.ic_checked)
-            isCheckedIconVisible = true
-        }
-        return chip
     }
 }

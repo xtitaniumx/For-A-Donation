@@ -85,11 +85,7 @@ class FamilyFragment : Fragment(), FamilyMemberAdapter.OnClickListener, FamilyMe
 
         vm.childTasksLive.observe(viewLifecycleOwner) { childTasks ->
             childTasks?.forEach { task ->
-                val currentList = familyMemberAdapter.currentNestedList(task.key)
-                val newList = ArrayList<TaskItem>()
-                currentList?.let { newList.addAll(it) }
-                childTasks[task.key]?.let { it -> newList.addAll(it) }
-                familyMemberAdapter.submitNestedList(newList, task.key)
+                task.value?.let { familyMemberAdapter.submitNestedList(it, task.key) }
             }
 
             if (loadingDialog.isShowing) loadingDialog.dismiss()

@@ -47,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:progress="60"
+                android:progress="70"
                 app:indicatorColor="?attr/colorPrimary"
                 app:indicatorSize="100dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -126,66 +126,14 @@
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/chipGroupWeekDay"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:checkedChip="@id/chipMonday"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             app:selectionRequired="true"
             app:singleLine="true"
             app:singleSelection="false"
-            tools:layout_editor_absoluteY="217dp">
+            tools:layout_editor_absoluteY="217dp" />
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipMonday"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Пн" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipTuesday"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Вт" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipWednesday"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ср" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipThursday"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Чт" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipFriday"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Пт" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipSaturday"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Сб" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipSunday"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Вс" />
-
-        </com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listTasks"

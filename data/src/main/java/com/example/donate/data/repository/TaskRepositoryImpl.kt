@@ -4,11 +4,9 @@ import com.example.donate.data.storage.TaskStorage
 import com.example.donate.data.storage.model.request.AddTaskRequest
 import com.example.donate.data.storage.model.request.GetTaskByFilterRequest
 import com.example.donate.data.storage.model.request.GetTaskByIdRequest
+import com.example.donate.data.storage.model.request.GetTaskByNameRequest
 import com.example.donate.data.storage.model.response.TaskResponse
-import com.example.donate.domain.model.AddNewTaskParam
-import com.example.donate.domain.model.GetTaskByFilterParam
-import com.example.donate.domain.model.GetTaskByIdParam
-import com.example.donate.domain.model.TaskItem
+import com.example.donate.domain.model.*
 import com.example.donate.domain.repository.TaskRepository
 
 class TaskRepositoryImpl(private val taskStorage: TaskStorage) : TaskRepository {
@@ -28,6 +26,11 @@ class TaskRepositoryImpl(private val taskStorage: TaskStorage) : TaskRepository 
     }
 
     override suspend fun getTaskByFilter(param: GetTaskByFilterParam): List<TaskItem>? {
+        val task = taskStorage.get(mapToStorage(param))
+        return task?.let { mapToDomain(it) }
+    }
+
+    override suspend fun getTaskByName(param: GetTaskByNameParam): List<TaskItem>? {
         val task = taskStorage.get(mapToStorage(param))
         return task?.let { mapToDomain(it) }
     }
@@ -78,6 +81,12 @@ class TaskRepositoryImpl(private val taskStorage: TaskStorage) : TaskRepository 
             executorId = getTaskByFilterParam.executorId,
             customerId = getTaskByFilterParam.customerId,
             category = getTaskByFilterParam.category
+        )
+    }
+
+    private fun mapToStorage(getTaskByNameParam: GetTaskByNameParam): GetTaskByNameRequest {
+        return GetTaskByNameRequest(
+            name = getTaskByNameParam.name
         )
     }
 }

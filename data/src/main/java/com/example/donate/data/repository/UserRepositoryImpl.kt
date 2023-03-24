@@ -4,12 +4,10 @@ import com.example.donate.data.storage.UserDataStorage
 import com.example.donate.data.storage.UserStorage
 import com.example.donate.data.storage.model.PrefDataConstants
 import com.example.donate.data.storage.model.request.AuthByPhoneRequest
+import com.example.donate.data.storage.model.request.GetUserByIdRequest
 import com.example.donate.data.storage.model.request.RegisterUserRequest
 import com.example.donate.data.storage.model.response.UserResponse
-import com.example.donate.domain.model.AuthByPhoneUserParam
-import com.example.donate.domain.model.RegisterUserParam
-import com.example.donate.domain.model.UserItem
-import com.example.donate.domain.model.UserProgressItem
+import com.example.donate.domain.model.*
 import com.example.donate.domain.repository.UserRepository
 
 class UserRepositoryImpl(private val userStorage: UserStorage, private val userDataStorage: UserDataStorage) : UserRepository {
@@ -30,6 +28,11 @@ class UserRepositoryImpl(private val userStorage: UserStorage, private val userD
     override fun authBySavedData(): Boolean {
         userDataStorage.setDataId(PrefDataConstants.USER_LOGGED_IN)
         return userDataStorage.fetchData().toBoolean()
+    }
+
+    override suspend fun getUserById(param: GetUserByIdParam): UserItem? {
+        val user = userStorage.get(mapToStorage(getUserByIdParam = param))
+        return user?.let { mapToDomain(userResponse = it) }
     }
 
     override fun getUserId(): String? {
@@ -59,6 +62,10 @@ class UserRepositoryImpl(private val userStorage: UserStorage, private val userD
             role = registerUserParam.role,
             familyId = registerUserParam.familyId
         )
+    }
+
+    private fun mapToStorage(getUserByIdParam: GetUserByIdParam): GetUserByIdRequest {
+        return GetUserByIdRequest(id = getUserByIdParam.id)
     }
 
     private fun mapToDomain(userResponse: UserResponse): UserItem {

@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     style="?materialCardViewOutlinedStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="12dp"
     android:layout_marginTop="8dp"
     android:layout_marginEnd="12dp"
-    app:cardCornerRadius="12dp"
+    app:cardCornerRadius="16dp"
     app:strokeColor="?attr/colorPrimary"
     app:strokeWidth="2dp">
 
@@ -38,7 +37,7 @@
             android:text="Сын"
             android:textColor="?attr/colorOnBackground"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/fabAddTask"
             app:layout_constraintStart_toEndOf="@+id/imageFamilyMember"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -53,11 +52,23 @@
             app:layout_constraintStart_toStartOf="@+id/textFamilyMemberRole"
             app:layout_constraintTop_toBottomOf="@+id/textFamilyMemberRole" />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabAddTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:fabCustomSize="50dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_new_task" />
+
         <com.google.android.material.divider.MaterialDivider
             android:id="@+id/dividerCardFamilyMember"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             app:dividerColor="?attr/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -67,34 +78,9 @@
             android:id="@+id/listFamilyMemberTasks"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/dividerCardFamilyMember" />
-
-        <TextView
-            android:id="@+id/textFamilyMemberTasksEmpty"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="10dp"
-            android:fontFamily="@font/inter_medium"
-            android:text="У данного пользователя нет активных задач"
-            android:textColor="?attr/colorOnBackground"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/listFamilyMemberTasks" />
-
-        <Button
-            android:id="@+id/buttonAddTask"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="12dp"
-            android:text="Добавить задачу"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textFamilyMemberTasksEmpty" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

@@ -6,6 +6,7 @@ import com.example.donate.data.storage.UserDataStorage
 import com.example.donate.data.storage.UserStorage
 import com.example.donate.data.storage.model.PrefDataConstants
 import com.example.donate.data.storage.model.request.AuthByPhoneRequest
+import com.example.donate.data.storage.model.request.GetUserByIdRequest
 import com.example.donate.data.storage.model.request.RegisterUserRequest
 import com.example.donate.data.storage.model.response.UserResponse
 import java.nio.charset.StandardCharsets
@@ -44,6 +45,11 @@ class NetworkUserStorage(context: Context, apiClient: ApiClient, private val use
                 )
             }
         }
+        return response.body()
+    }
+
+    override suspend fun get(request: GetUserByIdRequest): UserResponse? {
+        val response = apiService.getUserById(id = request.id).execute()
         return response.body()
     }
 

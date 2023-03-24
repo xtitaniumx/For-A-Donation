@@ -1,8 +1,14 @@
 package com.example.donate.presentation.util
 
 import android.app.Activity
+import android.content.Intent
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
+import com.example.donate.R
 import com.example.donate.databinding.DialogLoadingDataBinding
+import com.example.donate.domain.model.TaskItem
+import com.example.donate.presentation.TaskInfoActivity
+import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 fun Activity.getColorCompat(id: Int): Int {
@@ -17,4 +23,26 @@ fun Activity.createLoadingDialog(title: String): MaterialAlertDialogBuilder {
         }
     }
     return dialogBuilder
+}
+
+fun Activity.addChip(chipId: Int, chipText: String, checkable: Boolean = true): Chip {
+    val chip = Chip(this).apply {
+        id = chipId
+        text = chipText
+        checkedIcon = AppCompatResources.getDrawable(this@addChip, R.drawable.ic_checked)
+        isCheckedIconVisible = checkable
+        isCheckable = checkable
+    }
+    return chip
+}
+
+fun Activity.showTaskInfo(taskItem: TaskItem) {
+    val intent = Intent(this, TaskInfoActivity::class.java).apply {
+        putExtra(IntentConstants.TASK_NAME, taskItem.name)
+        putExtra(IntentConstants.TASK_DESCRIPTION, taskItem.description)
+        putExtra(IntentConstants.TASK_EXECUTOR_ID, taskItem.executorId)
+        putExtra(IntentConstants.TASK_POINTS, taskItem.points)
+        putExtra(IntentConstants.TASK_TIME_LIMIT, taskItem.dateTimeFinish)
+    }
+    startActivity(intent)
 }

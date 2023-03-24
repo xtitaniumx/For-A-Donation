@@ -44,15 +44,15 @@ class FamilyViewModel(
 
     fun getTaskById(id: String, roleId: Int) {
         viewModelScope.launch {
-            val task = withContext(Dispatchers.IO) {
+            val newTask = withContext(Dispatchers.IO) {
                 getTaskByIdUseCase(GetTaskByIdParam(taskId = id))
             }
 
-            task?.let {
+            newTask?.let { task ->
                 val newMap = HashMap<Int, List<TaskItem>>()
                 val newList = ArrayList<TaskItem>()
-                childTasksLive.value?.get(roleId)?.let { newList.addAll(it) }
-                newList.add(it)
+                childTasksLive.value?.get(roleId)?.let { it -> newList.addAll(it) }
+                newList.add(task)
                 newMap[roleId] = newList
                 childTasksMutable.value = newMap
             }

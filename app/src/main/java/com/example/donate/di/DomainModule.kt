@@ -45,6 +45,14 @@ val domainModule = module {
     }
 
     factory {
+        GetTaskByNameUseCase(taskRepository = get())
+    }
+
+    factory {
+        GetUserByIdUseCase(userRepository = get())
+    }
+
+    factory {
         GetUserIdUseCase(userRepository = get())
     }
 

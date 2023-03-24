@@ -7,14 +7,18 @@
     android:background="?attr/colorBackground"
     tools:context=".presentation.RegisterActivity">
 
-    <androidx.constraintlayout.utils.widget.MockView
-        android:id="@+id/mockLogoImage"
+    <ImageView
+        android:id="@+id/imageLogo"
         android:layout_width="200dp"
         android:layout_height="200dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="48dp"
+        android:layout_marginEnd="16dp"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_logo" />
 
     <TextView
         android:id="@+id/textAppName"
@@ -25,45 +29,26 @@
         android:text="@string/app_name"
         android:textColor="?attr/colorPrimary"
         android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="@+id/mockLogoImage"
-        app:layout_constraintStart_toStartOf="@+id/mockLogoImage"
-        app:layout_constraintTop_toBottomOf="@+id/mockLogoImage" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideLineRegisterCard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.7" />
-
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/imageCardRegister"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="?attr/colorPrimaryContainer"
-        android:elevation="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideLineRegisterCard"
-        app:shapeAppearance="?attr/shapeAppearanceMediumComponent"
-        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.Card.Media" />
+        app:layout_constraintEnd_toEndOf="@+id/imageLogo"
+        app:layout_constraintStart_toStartOf="@+id/imageLogo"
+        app:layout_constraintTop_toBottomOf="@+id/imageLogo" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageCardRegister"
-        app:layout_constraintEnd_toEndOf="@id/imageCardRegister"
-        app:layout_constraintStart_toStartOf="@+id/imageCardRegister"
-        app:layout_constraintTop_toTopOf="@id/guideLineRegisterCard">
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_card"
+        android:paddingTop="20dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="64dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="64dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="16dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toTopOf="@+id/textSignIn"
             app:layout_constraintEnd_toEndOf="parent"
@@ -104,7 +89,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="12dp"
             android:drawablePadding="4dp"
             android:fontFamily="@font/inter_regular"
             android:gravity="center_vertical"

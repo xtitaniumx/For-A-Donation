@@ -3,7 +3,7 @@ package com.example.donate.presentation.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isGone
+import androidx.core.view.isNotEmpty
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
@@ -18,16 +18,12 @@ class FamilyMemberAdapter(
     private val childAdaptersList: Map<Int, FamilyMemberTaskAdapter>
 ) : ListAdapter<FamilyMemberItem, FamilyMemberAdapter.Holder>(Comparator()) {
 
-    fun submitNestedList(list: List<TaskItem>, position: Int) {
-        childAdaptersList[position]?.submitList(list)
-    }
-
-    fun currentNestedList(position: Int): List<TaskItem>? {
-        return childAdaptersList[position]?.currentList
-    }
-
     interface OnClickListener {
         fun onAddFamilyMemberTaskClick(item: FamilyMemberItem)
+    }
+
+    fun submitNestedList(list: List<TaskItem>, position: Int) {
+        childAdaptersList[position]?.submitList(list)
     }
 
     class Holder(itemView: View, listener: OnClickListener, private val childAdaptersList: Map<Int, FamilyMemberTaskAdapter>) : ViewHolder(itemView) {
@@ -36,13 +32,8 @@ class FamilyMemberAdapter(
         private lateinit var familyMemberItem: FamilyMemberItem
 
         init {
-            binding.buttonAddTask.setOnClickListener {
+            binding.fabAddTask.setOnClickListener {
                 listener.onAddFamilyMemberTaskClick(item = familyMemberItem)
-
-                if (!binding.textFamilyMemberTasksEmpty.isGone) {
-                    binding.textFamilyMemberTasksEmpty.isGone = true
-                    binding.listFamilyMemberTasks.isGone = false
-                }
             }
         }
 
@@ -50,12 +41,13 @@ class FamilyMemberAdapter(
             familyMemberItem = item
             textFamilyMemberRole.text = context.resources.getStringArray(R.array.family_roles)[item.role]
             textFamilyMemberGoal.text = ""
-            //if (listFamilyMemberTasks.adapter == null) {
+
+            if (listFamilyMemberTasks.adapter == null) {
                 listFamilyMemberTasks.apply {
                     layoutManager = LinearLayoutManager(context)
                     adapter = childAdaptersList[item.role]
                 }
-            //}
+            }
         }
     }
 

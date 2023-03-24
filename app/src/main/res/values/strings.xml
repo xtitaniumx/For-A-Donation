@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">За донат</string>
+    <string name="app_name">Confetti</string>
 
     <!-- Login Activity -->
     <string name="no_have_account">Нет аккаунта? <u>Создайте семью</u></string>
@@ -11,6 +11,16 @@
 
     <!-- Tasks Fragment -->
     <string name="search_by_tasks">Поиск по задачам</string>
-    <string name="goal_progress_pattern">6</string>
+    <string name="goal_progress_pattern">/%1$d</string>
     <string name="goal">Цель</string>
+
+    <!-- Search Activity -->
+    <string name="nothing_found">Ничего не найдено</string>
+    <string name="enter_anything_to_search">Введите что-нибудь в поле поиска</string>
+
+    <!-- Task Info Activity -->
+    <string name="reward">Награда: </string>
+    <string name="reward_amount">%1$d</string>
+    <string name="time_limits">Ограничения по времени:</string>
+    <string name="time_divider">:</string>
 </resources>

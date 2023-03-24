@@ -11,6 +11,8 @@ interface UserRepository {
 
     fun authBySavedData(): Boolean
 
+    suspend fun getUserById(param: GetUserByIdParam): UserItem?
+
     fun getUserId(): String?
 
     fun getFamilyId(): String?

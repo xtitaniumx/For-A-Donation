@@ -36,6 +36,14 @@ val appModule = module {
     }
 
     viewModel {
+        SearchViewModel(getTaskByNameUseCase = get())
+    }
+
+    viewModel {
+        TaskInfoViewModel(getUserByIdUseCase = get())
+    }
+
+    viewModel {
         TasksViewModel(
             getAllTasksUseCase = get(),
             getFamilyByIdUseCase = get(),

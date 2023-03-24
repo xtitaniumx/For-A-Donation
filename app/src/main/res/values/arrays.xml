@@ -8,4 +8,22 @@
         <item>Дедушка</item>
         <item>Бабушка</item>
     </string-array>
+
+    <string-array name="weekdays">
+        <item>Пн</item>
+        <item>Вт</item>
+        <item>Ср</item>
+        <item>Чт</item>
+        <item>Пт</item>
+        <item>Сб</item>
+        <item>Вс</item>
+    </string-array>
+    
+    <string-array name="task_categories">
+        <item>Поведение</item>
+        <item>Дом</item>
+        <item>Исследование</item>
+        <item>Творчество</item>
+        <item>Спорт</item>
+    </string-array>
 </resources>
