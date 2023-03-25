@@ -11,7 +11,8 @@ class MainActivity : AppCompatActivity() {
     private val fragmentList by lazy {
         listOf(
             TasksFragment.newInstance(),
-            FamilyFragment.newInstance()
+            FamilyFragment.newInstance(),
+            ProfileFragment.newInstance()
         )
     }
     private var activeFragment = fragmentList[0]
@@ -31,6 +32,9 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.navItemFamily -> {
                     openFragment(fragmentList[1])
+                }
+                R.id.navItemProfile -> {
+                    openFragment(fragmentList[2])
                 }
             }
             return@setOnItemSelectedListener true

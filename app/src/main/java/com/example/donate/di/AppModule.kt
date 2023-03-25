@@ -32,6 +32,13 @@ val appModule = module {
     }
 
     viewModel {
+        ProfileViewModel(
+            getUserIdUseCase = get(),
+            getUserByIdUseCase = get()
+        )
+    }
+
+    viewModel {
         QrScannerViewModel()
     }
 

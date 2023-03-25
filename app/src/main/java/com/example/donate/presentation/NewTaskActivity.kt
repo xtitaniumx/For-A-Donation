@@ -25,7 +25,7 @@ class NewTaskActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        vm.getFamilyMembers(intent.getIntExtra(IntentConstants.MEMBER_ROLE, 0))
+        vm.getFamilyMembers(intent.getIntExtra(IntentConstants.MEMBER_ROLE, -1))
         binding = ActivityNewTaskBinding.inflate(layoutInflater)
         init()
         setContentView(binding.root)

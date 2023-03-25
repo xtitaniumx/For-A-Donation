@@ -3,7 +3,6 @@ package com.example.donate.presentation.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isNotEmpty
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
@@ -12,6 +11,7 @@ import com.example.donate.R
 import com.example.donate.databinding.ItemFamilyMemberBinding
 import com.example.donate.domain.model.FamilyMemberItem
 import com.example.donate.domain.model.TaskItem
+import com.google.android.material.divider.MaterialDividerItemDecoration
 
 class FamilyMemberAdapter(
     private val listener: OnClickListener,
@@ -32,7 +32,7 @@ class FamilyMemberAdapter(
         private lateinit var familyMemberItem: FamilyMemberItem
 
         init {
-            binding.fabAddTask.setOnClickListener {
+            binding.buttonAddTask.setOnClickListener {
                 listener.onAddFamilyMemberTaskClick(item = familyMemberItem)
             }
         }
@@ -43,8 +43,10 @@ class FamilyMemberAdapter(
             textFamilyMemberGoal.text = ""
 
             if (listFamilyMemberTasks.adapter == null) {
+                val divider = MaterialDividerItemDecoration(context, LinearLayoutManager.VERTICAL)
                 listFamilyMemberTasks.apply {
                     layoutManager = LinearLayoutManager(context)
+                    addItemDecoration(divider)
                     adapter = childAdaptersList[item.role]
                 }
             }

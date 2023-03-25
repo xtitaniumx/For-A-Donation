@@ -2,10 +2,10 @@
     <string name="app_name">Confetti</string>
 
     <!-- Login Activity -->
-    <string name="no_have_account">Нет аккаунта? <u>Создайте семью</u></string>
+    <string name="no_have_account">Нет аккаунта? <u>Зарегистрироваться</u></string>
 
     <!-- Main Activity -->
-    <string name="tasks_menu">Мои задачи</string>
+    <string name="tasks_menu">Задачи</string>
     <string name="family_menu">Семья</string>
     <string name="profile_menu">Я</string>
 

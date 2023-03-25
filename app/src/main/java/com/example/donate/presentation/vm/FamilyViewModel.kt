@@ -62,19 +62,22 @@ class FamilyViewModel(
     fun getTasksByFilter(categoryNum: Int) {
         viewModelScope.launch {
             val userId = getUserIdUseCase()
-            childTasksMutable.value = withContext(Dispatchers.IO) {
-                val newMap = HashMap<Int, List<TaskItem>?>()
-                childFamilyMembersLive.value?.forEach { familyMember ->
-                    val childTasks = getTaskByFilterUseCase(
-                        GetTaskByFilterParam(
-                            executorId = familyMember.id,
-                            customerId = userId!!,
-                            category = categoryNum
+            userId?.let {
+                val user = withContext(Dispatchers.IO) {
+                    val newMap = HashMap<Int, List<TaskItem>?>()
+                    childFamilyMembersLive.value?.forEach { familyMember ->
+                        val childTasks = getTaskByFilterUseCase(
+                            GetTaskByFilterParam(
+                                executorId = familyMember.id,
+                                customerId = it,
+                                category = categoryNum
+                            )
                         )
-                    )
-                    newMap[familyMember.role] = childTasks
+                        newMap[familyMember.role] = childTasks
+                    }
+                    newMap
                 }
-                newMap
+                childTasksMutable.value = user
             }
         }
     }
