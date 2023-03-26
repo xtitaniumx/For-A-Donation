@@ -28,7 +28,8 @@
         app:layout_constraintBottom_toTopOf="@+id/listProfileOptions"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_settings" />
+        app:srcCompat="@drawable/ic_settings"
+        app:tint="?attr/colorOnBackground" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imageProfileAvatar"

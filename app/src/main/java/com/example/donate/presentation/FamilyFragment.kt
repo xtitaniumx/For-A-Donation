@@ -11,13 +11,16 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.donate.R
 import com.example.donate.databinding.FragmentFamilyBinding
 import com.example.donate.domain.model.FamilyMemberItem
 import com.example.donate.domain.model.TaskItem
 import com.example.donate.presentation.adapter.FamilyMemberAdapter
 import com.example.donate.presentation.adapter.FamilyMemberTaskAdapter
 import com.example.donate.presentation.util.IntentConstants
+import com.example.donate.presentation.util.addChip
 import com.example.donate.presentation.util.createLoadingDialog
+import com.example.donate.presentation.util.showTaskInfo
 import com.example.donate.presentation.vm.FamilyViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -51,6 +54,12 @@ class FamilyFragment : Fragment(), FamilyMemberAdapter.OnClickListener, FamilyMe
     }
 
     private fun init() = with(binding) {
+        val taskCategories = resources.getStringArray(R.array.task_categories)
+        taskCategories.forEach {
+            chipGroupFilters.addView(requireActivity().addChip(taskCategories.indexOf(it), it))
+        }
+        chipGroupFilters.check(0)
+
         val intent = Intent(requireActivity(), AddFamilyMemberActivity::class.java)
 
         vm.childFamilyMembersLive.observe(viewLifecycleOwner) { familyMembers ->
@@ -69,7 +78,11 @@ class FamilyFragment : Fragment(), FamilyMemberAdapter.OnClickListener, FamilyMe
             loadingDialog.dismiss()
 
             loadingDialog = requireActivity().createLoadingDialog("Получение списка задач для каждого ребенка").show()
-            vm.getTasksByFilter(0)
+            vm.getTasksByFilter(chipGroupFilters.checkedChipId)
+        }
+
+        chipGroupFilters.setOnCheckedStateChangeListener { _, _ ->
+            vm.getTasksByFilter(chipGroupFilters.checkedChipId)
         }
 
         fabAddFamilyMember.setOnClickListener {
@@ -101,6 +114,6 @@ class FamilyFragment : Fragment(), FamilyMemberAdapter.OnClickListener, FamilyMe
     }
 
     override fun onFamilyMemberTaskClick(item: TaskItem) {
-
+        requireActivity().showTaskInfo(taskItem = item)
     }
 }

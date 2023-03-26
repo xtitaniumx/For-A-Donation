@@ -53,17 +53,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:paddingStart="12dp"
             android:paddingTop="8dp"
-            android:paddingEnd="12dp"
+            android:paddingEnd="4dp"
             android:paddingBottom="8dp">
 
             <TextView
                 android:id="@+id/textMembers"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
                 android:fontFamily="@font/manrope_regular"
                 android:text="Участник:"
                 android:textColor="?attr/colorOnSecondaryContainer"
@@ -73,9 +72,10 @@
                 android:id="@+id/chipGroupFamilyMembers"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="8dp"
-                app:chipSpacingVertical="0dp" />
+                app:chipSpacingVertical="0dp"
+                app:selectionRequired="true"
+                app:singleLine="false"
+                app:singleSelection="true" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -174,4 +174,18 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fabFinishTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="Задача завершена"
+        app:icon="@drawable/ic_checked"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

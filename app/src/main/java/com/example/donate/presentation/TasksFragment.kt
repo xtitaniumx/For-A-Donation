@@ -14,6 +14,7 @@ import com.example.donate.domain.model.TaskItem
 import com.example.donate.presentation.adapter.TaskAdapter
 import com.example.donate.presentation.util.addChip
 import com.example.donate.presentation.util.createLoadingDialog
+import com.example.donate.presentation.util.showTaskInfo
 import com.example.donate.presentation.vm.TasksViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -80,6 +81,6 @@ class TasksFragment : Fragment(), TaskAdapter.OnClickListener {
     }
 
     override fun onTaskClick(item: TaskItem) {
-
+        requireActivity().showTaskInfo(taskItem = item)
     }
 }

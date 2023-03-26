@@ -156,6 +156,7 @@
         android:clickable="true"
         android:focusable="true"
         android:text="Новая задача"
+        android:visibility="gone"
         app:icon="@drawable/ic_new_task"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

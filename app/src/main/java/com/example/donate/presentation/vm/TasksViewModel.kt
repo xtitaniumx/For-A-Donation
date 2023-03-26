@@ -23,6 +23,9 @@ class TasksViewModel(
     private val familyIdMutable = MutableLiveData<String?>()
     val familyIdLive: LiveData<String?> = familyIdMutable
 
+    private val familyMemberMutable = MutableLiveData<FamilyMemberItem?>()
+    val familyMemberLive: LiveData<FamilyMemberItem?> = familyMemberMutable
+
     private val familyMembersMutable = MutableLiveData<List<FamilyMemberItem>?>()
     val familyMembersLive: LiveData<List<FamilyMemberItem>?> = familyMembersMutable
 
@@ -47,7 +50,8 @@ class TasksViewModel(
                 val family = withContext(Dispatchers.IO) {
                     getFamilyByIdUseCase(GetFamilyParam(id = familyIdLive.value!!))
                 }
-                familyMembersMutable.value = family?.members?.filter { it.role == 2 || it.role == 3 }
+                if (roleId == -1) familyMembersMutable.value = family?.members?.filter { it.role == 2 || it.role == 3 }
+                else familyMemberMutable.value = family?.members?.find { it.role == roleId }
             }
         }
     }

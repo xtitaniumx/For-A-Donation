@@ -63,7 +63,7 @@ class FamilyViewModel(
         viewModelScope.launch {
             val userId = getUserIdUseCase()
             userId?.let {
-                val user = withContext(Dispatchers.IO) {
+                val tasks = withContext(Dispatchers.IO) {
                     val newMap = HashMap<Int, List<TaskItem>?>()
                     childFamilyMembersLive.value?.forEach { familyMember ->
                         val childTasks = getTaskByFilterUseCase(
@@ -77,7 +77,7 @@ class FamilyViewModel(
                     }
                     newMap
                 }
-                childTasksMutable.value = user
+                childTasksMutable.value = tasks
             }
         }
     }

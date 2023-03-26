@@ -1,6 +1,7 @@
 package com.example.donate.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
@@ -38,8 +39,18 @@ class SearchActivity : AppCompatActivity(), TaskAdapter.OnClickListener {
             adapter = tasksAdapter
         }
 
+        chipGroupFilters.setOnCheckedStateChangeListener { _, _ ->
+            vm.searchTasks(
+                query = viewSearch.editTextSearchTasks.text.toString(),
+                category = chipGroupFilters.checkedChipId
+            )
+        }
+
         viewSearch.editTextSearchTasks.addTextChangedListener {
-            vm.searchTasksByName(it.toString())
+            vm.searchTasks(
+                query = it.toString(),
+                category = chipGroupFilters.checkedChipId
+            )
         }
 
         vm.tasksListLive.observe(this@SearchActivity) {
@@ -47,6 +58,7 @@ class SearchActivity : AppCompatActivity(), TaskAdapter.OnClickListener {
                 layoutEmptySearch.visibility = View.VISIBLE
             else
                 layoutEmptySearch.visibility = View.INVISIBLE
+            Log.d("info", "ChipID: ${chipGroupFilters.checkedChipId}")
             tasksAdapter.submitList(it)
         }
     }

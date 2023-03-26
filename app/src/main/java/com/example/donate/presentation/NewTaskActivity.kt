@@ -21,6 +21,7 @@ import java.util.*
 class NewTaskActivity : AppCompatActivity() {
     private val vm by viewModel<TasksViewModel>()
     private lateinit var binding: ActivityNewTaskBinding
+    private val familyRoles by lazy { resources.getStringArray(R.array.family_roles) }
     private val executorMap = HashMap<Int, String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,8 +33,7 @@ class NewTaskActivity : AppCompatActivity() {
     }
 
     private fun init() = with(binding) {
-        vm.familyMembersLive.observe(this@NewTaskActivity) { familyMembers ->
-            val familyRoles = resources.getStringArray(R.array.family_roles)
+        /*vm.familyMembersLive.observe(this@NewTaskActivity) { familyMembers ->
             executorMap.clear()
             chipGroupFamilyMembers.removeAllViews()
 
@@ -42,8 +42,19 @@ class NewTaskActivity : AppCompatActivity() {
                 chipGroupFamilyMembers.addView(addChip(it.role, familyRoles[it.role]))
             }
 
-            chipGroupFamilyMembers.check(intent.getIntExtra(IntentConstants.MEMBER_ROLE, 0))
+            familyMembers?.let { chipGroupFamilyMembers.check(it[0].role) }
+        }*/
+        vm.familyMemberLive.observe(this@NewTaskActivity) { familyMember ->
+            if (familyMember == null) return@observe
+            chipGroupFamilyMembers.removeAllViews()
+            chipGroupFamilyMembers.addView(addChip(familyMember.role, familyRoles[familyMember.role], false))
         }
+
+        val taskCategories = resources.getStringArray(R.array.task_categories)
+        taskCategories.forEach {
+            chipGroupFilters.addView(addChip(taskCategories.indexOf(it), it))
+        }
+        chipGroupFilters.check(0)
 
         val weekDays = resources.getStringArray(R.array.weekdays)
         weekDays.forEach {
@@ -103,16 +114,17 @@ class NewTaskActivity : AppCompatActivity() {
             vm.addNewTask(
                 name = editTextTaskName.text.toString(),
                 desc = editTextTaskDesc.text.toString(),
-                executorId = executorMap[chipGroupFamilyMembers.checkedChipId]!!,
+                executorId = vm.familyMemberLive.value!!.id,
                 points = sliderReward.value.toInt(),
-                category = 0,
+                category = chipGroupFilters.checkedChipId,
                 dateTimeFinish = vm.dateTimeLive.value!!
             )
         }
 
         vm.taskLive.observe(this@NewTaskActivity) {
-            val data = Intent()
-            data.putExtra(IntentConstants.NEW_TASK_ID, it?.id)
+            val data = Intent().apply {
+                putExtra(IntentConstants.NEW_TASK_ID, it?.id)
+            }
             setResult(RESULT_OK, data)
             finish()
         }

@@ -4,24 +4,30 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.donate.domain.model.GetTaskByNameParam
-import com.example.donate.domain.model.TaskItem
-import com.example.donate.domain.usecase.GetTaskByNameUseCase
+import com.example.donate.domain.model.*
+import com.example.donate.domain.usecase.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class SearchViewModel(private val getTaskByNameUseCase: GetTaskByNameUseCase) : ViewModel() {
+
     private val tasksListMutable = MutableLiveData<List<TaskItem>?>()
     val tasksListLive: LiveData<List<TaskItem>?> = tasksListMutable
 
-    fun searchTasksByName(query: String) {
+    fun searchTasks(query: String, category: Int) {
         viewModelScope.launch {
-            tasksListMutable.value = withContext(Dispatchers.IO) {
+            val tasks = withContext(Dispatchers.IO) {
                 getTaskByNameUseCase(GetTaskByNameParam(
                     name = query
                 ))
             }
+            val filteredList = ArrayList<TaskItem>()
+            tasks?.forEach {
+                if (it.categoryOfTask == category)
+                    filteredList.add(it)
+            }
+            tasksListMutable.value = filteredList
         }
     }
 }
