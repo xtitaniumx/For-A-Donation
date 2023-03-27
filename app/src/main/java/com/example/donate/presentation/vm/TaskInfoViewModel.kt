@@ -15,6 +15,9 @@ class TaskInfoViewModel(private val getUserByIdUseCase: GetUserByIdUseCase) : Vi
     private val userMutable = MutableLiveData<UserItem?>()
     val userLive: LiveData<UserItem?> = userMutable
 
+    private val dateTimeMutable = MutableLiveData<Pair<String, Pair<String, String>>>()
+    val dateTimeLive: LiveData<Pair<String, Pair<String, String>>> = dateTimeMutable
+
     fun getUserFromId(userId: String) {
         viewModelScope.launch {
             val user = withContext(Dispatchers.IO) {
@@ -24,5 +27,12 @@ class TaskInfoViewModel(private val getUserByIdUseCase: GetUserByIdUseCase) : Vi
             }
             userMutable.value = user
         }
+    }
+
+    fun parseDateTime(dateTime: String) {
+        val format = dateTime.split('T')
+        val formatDate = format[0].replace('-', '.')
+        val formatTime = format[1].split('.')[0].split(':')
+        dateTimeMutable.value = Pair(formatDate, Pair(formatTime[0], formatTime[1]))
     }
 }

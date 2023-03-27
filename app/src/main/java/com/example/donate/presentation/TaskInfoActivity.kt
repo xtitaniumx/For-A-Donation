@@ -16,6 +16,7 @@ class TaskInfoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         intent.getStringExtra(IntentConstants.TASK_EXECUTOR_ID)?.let { vm.getUserFromId(it) }
+        intent.getStringExtra(IntentConstants.TASK_TIME_LIMIT)?.let { vm.parseDateTime(it) }
         binding = ActivityTaskInfoBinding.inflate(layoutInflater)
         init()
         setContentView(binding.root)
@@ -32,6 +33,13 @@ class TaskInfoActivity : AppCompatActivity() {
             chipGroupFamilyMembers.removeAllViews()
             val familyRoles = resources.getStringArray(R.array.family_roles)
             chipGroupFamilyMembers.addView(addChip(0, familyRoles[it.role], false))
+        }
+
+        vm.dateTimeLive.observe(this@TaskInfoActivity) { dateTime ->
+            textDateLimit.text = dateTime.first
+            val time = dateTime.second
+            viewTime.textHours.text = time.first
+            viewTime.textMinutes.text = time.second
         }
     }
 }
