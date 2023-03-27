@@ -38,6 +38,7 @@ fun Activity.addChip(chipId: Int, chipText: String, checkable: Boolean = true): 
 
 fun Activity.showTaskInfo(taskItem: TaskItem) {
     val intent = Intent(this, TaskInfoActivity::class.java).apply {
+        putExtra(IntentConstants.TASK_ID, taskItem.id)
         putExtra(IntentConstants.TASK_NAME, taskItem.name)
         putExtra(IntentConstants.TASK_DESCRIPTION, taskItem.description)
         putExtra(IntentConstants.TASK_EXECUTOR_ID, taskItem.executorId)

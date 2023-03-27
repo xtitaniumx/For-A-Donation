@@ -12,4 +12,6 @@ interface TaskRepository {
     suspend fun getTaskByFilter(param: GetTaskByFilterParam): List<TaskItem>?
 
     suspend fun getTaskByName(param: GetTaskByNameParam): List<TaskItem>?
+
+    suspend fun makeTaskAsFinish(param: MarkTaskAsFinishParam): TaskItem?
 }

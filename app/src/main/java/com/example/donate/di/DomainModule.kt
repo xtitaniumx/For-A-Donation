@@ -57,6 +57,10 @@ val domainModule = module {
     }
 
     factory {
+        MarkTaskAsFinishUseCase(taskRepository = get())
+    }
+
+    factory {
         RegisterUserUseCase(userRepository = get())
     }
 }

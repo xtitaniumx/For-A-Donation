@@ -1,10 +1,7 @@
 package com.example.donate.data.repository
 
 import com.example.donate.data.storage.TaskStorage
-import com.example.donate.data.storage.model.request.AddTaskRequest
-import com.example.donate.data.storage.model.request.GetTaskByFilterRequest
-import com.example.donate.data.storage.model.request.GetTaskByIdRequest
-import com.example.donate.data.storage.model.request.GetTaskByNameRequest
+import com.example.donate.data.storage.model.request.*
 import com.example.donate.data.storage.model.response.TaskResponse
 import com.example.donate.domain.model.*
 import com.example.donate.domain.repository.TaskRepository
@@ -32,6 +29,11 @@ class TaskRepositoryImpl(private val taskStorage: TaskStorage) : TaskRepository 
 
     override suspend fun getTaskByName(param: GetTaskByNameParam): List<TaskItem>? {
         val task = taskStorage.get(mapToStorage(param))
+        return task?.let { mapToDomain(it) }
+    }
+
+    override suspend fun makeTaskAsFinish(param: MarkTaskAsFinishParam): TaskItem? {
+        val task = taskStorage.markFinish(mapToStorage(param))
         return task?.let { mapToDomain(it) }
     }
 
@@ -87,6 +89,13 @@ class TaskRepositoryImpl(private val taskStorage: TaskStorage) : TaskRepository 
     private fun mapToStorage(getTaskByNameParam: GetTaskByNameParam): GetTaskByNameRequest {
         return GetTaskByNameRequest(
             name = getTaskByNameParam.name
+        )
+    }
+
+    private fun mapToStorage(markTaskAsFinishParam: MarkTaskAsFinishParam): MarkTaskAsFinishRequest {
+        return MarkTaskAsFinishRequest(
+            taskId = markTaskAsFinishParam.taskId,
+            userId = markTaskAsFinishParam.userId
         )
     }
 }

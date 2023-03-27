@@ -41,5 +41,19 @@ class TaskInfoActivity : AppCompatActivity() {
             viewTime.textHours.text = time.first
             viewTime.textMinutes.text = time.second
         }
+
+        vm.finishedTaskLive.observe(this@TaskInfoActivity) {
+            if (it == null) return@observe
+            finish()
+        }
+
+        fabFinishTask.setOnClickListener {
+            val taskId = intent.getStringExtra(IntentConstants.TASK_ID)
+            val userId = intent.getStringExtra(IntentConstants.TASK_EXECUTOR_ID)
+
+            if (taskId != null && userId != null) {
+                vm.finishTask(taskId, userId)
+            }
+        }
     }
 }

@@ -10,6 +10,7 @@ import com.example.donate.data.storage.model.response.TaskResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
@@ -38,6 +39,9 @@ interface ApiService {
 
     @POST("/api/Task/Create")
     fun addTask(@Body request: AddTaskRequest): Call<TaskResponse>
+
+    @PATCH("/api/Task/IsFinishedTask/{taskId},{userId}")
+    fun markAsFinish(@Path("taskId") taskId: String, @Path("userId") userId: String): Call<TaskResponse>
 
     @GET("/api/Family/GetById/{id}")
     fun getFamilyById(@Path("id") familyId: String): Call<FamilyResponse>

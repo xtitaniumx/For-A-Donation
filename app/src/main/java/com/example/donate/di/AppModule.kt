@@ -47,7 +47,10 @@ val appModule = module {
     }
 
     viewModel {
-        TaskInfoViewModel(getUserByIdUseCase = get())
+        TaskInfoViewModel(
+            getUserByIdUseCase = get(),
+            markTaskAsFinishUseCase = get()
+        )
     }
 
     viewModel {

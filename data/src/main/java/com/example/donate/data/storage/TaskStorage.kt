@@ -1,9 +1,6 @@
 package com.example.donate.data.storage
 
-import com.example.donate.data.storage.model.request.AddTaskRequest
-import com.example.donate.data.storage.model.request.GetTaskByFilterRequest
-import com.example.donate.data.storage.model.request.GetTaskByIdRequest
-import com.example.donate.data.storage.model.request.GetTaskByNameRequest
+import com.example.donate.data.storage.model.request.*
 import com.example.donate.data.storage.model.response.TaskResponse
 
 interface TaskStorage {
@@ -16,4 +13,6 @@ interface TaskStorage {
     suspend fun get(request: GetTaskByFilterRequest): List<TaskResponse>?
 
     suspend fun add(request: AddTaskRequest): TaskResponse?
+
+    suspend fun markFinish(request: MarkTaskAsFinishRequest): TaskResponse?
 }

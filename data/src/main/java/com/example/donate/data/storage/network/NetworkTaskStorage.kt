@@ -2,10 +2,7 @@ package com.example.donate.data.storage.network
 
 import android.content.Context
 import com.example.donate.data.storage.TaskStorage
-import com.example.donate.data.storage.model.request.AddTaskRequest
-import com.example.donate.data.storage.model.request.GetTaskByFilterRequest
-import com.example.donate.data.storage.model.request.GetTaskByIdRequest
-import com.example.donate.data.storage.model.request.GetTaskByNameRequest
+import com.example.donate.data.storage.model.request.*
 import com.example.donate.data.storage.model.response.TaskResponse
 
 class NetworkTaskStorage(context: Context, apiClient: ApiClient) : TaskStorage {
@@ -39,6 +36,14 @@ class NetworkTaskStorage(context: Context, apiClient: ApiClient) : TaskStorage {
 
     override suspend fun add(request: AddTaskRequest): TaskResponse? {
         val response = apiService.addTask(request).execute()
+        return response.body()
+    }
+
+    override suspend fun markFinish(request: MarkTaskAsFinishRequest): TaskResponse? {
+        val response = apiService.markAsFinish(
+            taskId = request.taskId,
+            userId = request.userId
+        ).execute()
         return response.body()
     }
 }

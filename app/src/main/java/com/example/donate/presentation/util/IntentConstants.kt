@@ -4,6 +4,7 @@ object IntentConstants {
     const val QR_CODE_VALUE = "qr_code_value"
     const val NEW_TASK_ID = "new_task_id"
     const val MEMBER_ROLE = "member_role"
+    const val TASK_ID = "task_id"
     const val TASK_NAME = "task_name"
     const val TASK_DESCRIPTION = "task_description"
     const val TASK_EXECUTOR_ID = "task_executor_id"
