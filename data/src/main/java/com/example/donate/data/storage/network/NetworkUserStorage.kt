@@ -27,17 +27,12 @@ class NetworkUserStorage(context: Context, apiClient: ApiClient, private val use
         return response.body()
     }
 
-    override fun auth(): Boolean {
-        userDataStorage.setDataId(PrefDataConstants.USER_TOKEN)
-        return !userDataStorage.fetchData().isNullOrEmpty()
-    }
-
     override suspend fun auth(request: AuthByPhoneRequest): UserResponse? {
         val response = apiService.authUserByPhone(request).execute()
         if (response.isSuccessful) {
             response.body()?.let {
                 userDataStorage.setDataId(PrefDataConstants.USER_LOGGED_IN)
-                userDataStorage.saveData(true.toString())
+                userDataStorage.saveData(request.remember.toString())
                 saveUserData(
                     login = request.phoneNumber,
                     password = request.password,

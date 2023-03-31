@@ -30,17 +30,8 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         textSignIn.setOnClickListener {
-            vm.authUser()
-        }
-
-        vm.tokenIsExistLive.observe(this@RegisterActivity) {
-            if (it) {
-                val intent = Intent(this@RegisterActivity, MainActivity::class.java)
-                startActivity(intent)
-            } else {
-                val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
-                startActivity(intent)
-            }
+            val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+            startActivity(intent)
         }
     }
 }

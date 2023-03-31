@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/categoryBehavior"
+        android:title="Поведение" />
+    <item
+        android:id="@+id/categoryHome"
+        android:title="Дом" />
+    <item
+        android:id="@+id/categoryStudy"
+        android:title="Исследование" />
+    <item
+        android:id="@+id/categoryCreative"
+        android:title="Творчество" />
+    <item
+        android:id="@+id/categorySport"
+        android:title="Спорт" />
+</menu>

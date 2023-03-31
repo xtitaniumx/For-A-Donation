@@ -16,18 +16,18 @@ class UserRepositoryImpl(private val userStorage: UserStorage, private val userD
         return user?.let { mapToDomain(userResponse = it) }
     }
 
-    override fun authByToken(): Boolean {
-        return userStorage.auth()
+    override fun authByRememberData(): Boolean {
+        userDataStorage.setDataId(PrefDataConstants.USER_TOKEN)
+        val tokenIsExist = !userDataStorage.fetchData().isNullOrEmpty()
+        userDataStorage.setDataId(PrefDataConstants.USER_LOGGED_IN)
+        val loginState = userDataStorage.fetchData().toBoolean()
+
+        return tokenIsExist && loginState
     }
 
     override suspend fun authByPhone(param: AuthByPhoneUserParam): UserItem? {
         val user = userStorage.auth(mapToStorage(authByPhoneUserParam = param))
         return user?.let { mapToDomain(userResponse = it) }
-    }
-
-    override fun authBySavedData(): Boolean {
-        userDataStorage.setDataId(PrefDataConstants.USER_LOGGED_IN)
-        return userDataStorage.fetchData().toBoolean()
     }
 
     override suspend fun getUserById(param: GetUserByIdParam): UserItem? {
@@ -48,7 +48,8 @@ class UserRepositoryImpl(private val userStorage: UserStorage, private val userD
     private fun mapToStorage(authByPhoneUserParam: AuthByPhoneUserParam): AuthByPhoneRequest {
         return AuthByPhoneRequest(
             phoneNumber = authByPhoneUserParam.phoneNumber,
-            password = authByPhoneUserParam.password
+            password = authByPhoneUserParam.password,
+            remember = authByPhoneUserParam.remember
         )
     }
 

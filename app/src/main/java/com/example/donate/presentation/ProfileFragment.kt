@@ -70,6 +70,10 @@ class ProfileFragment : Fragment(), ProfileOptionAdapter.OnClickListener {
         vm.userLive.observe(viewLifecycleOwner) { user ->
             textProfileName.text = user?.name
         }
+
+        buttonLogOut.setOnClickListener {
+            
+        }
     }
 
     override fun onProfileOptionClick(item: ProfileOptionItem) {

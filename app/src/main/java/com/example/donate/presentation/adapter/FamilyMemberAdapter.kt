@@ -19,6 +19,8 @@ class FamilyMemberAdapter(
 ) : ListAdapter<FamilyMemberItem, FamilyMemberAdapter.Holder>(Comparator()) {
 
     interface OnClickListener {
+        fun onShowCategoriesMenuClick(view: View)
+
         fun onAddFamilyMemberTaskClick(item: FamilyMemberItem)
     }
 
@@ -32,6 +34,9 @@ class FamilyMemberAdapter(
         private lateinit var familyMemberItem: FamilyMemberItem
 
         init {
+            binding.buttonShowCategories.setOnClickListener {
+                listener.onShowCategoriesMenuClick(view = it)
+            }
             binding.buttonAddTask.setOnClickListener {
                 listener.onAddFamilyMemberTaskClick(item = familyMemberItem)
             }

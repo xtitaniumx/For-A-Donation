@@ -17,11 +17,7 @@ val domainModule = module {
     }
 
     factory {
-        AuthBySavedDataUseCase(userRepository = get())
-    }
-
-    factory {
-        AuthByTokenUseCase(userRepository = get())
+        AuthByRememberDataUseCase(userRepository = get())
     }
 
     factory {

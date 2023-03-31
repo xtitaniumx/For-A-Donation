@@ -25,9 +25,8 @@ val appModule = module {
 
     viewModel {
         LoginViewModel(
-            authByTokenUseCase = get(),
-            authByPhoneUseCase = get(),
-            authBySavedDataUseCase = get()
+            authByRememberDataUseCase = get(),
+            authByPhoneUseCase = get()
         )
     }
 

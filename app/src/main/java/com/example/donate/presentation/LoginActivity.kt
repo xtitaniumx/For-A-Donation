@@ -26,14 +26,18 @@ class LoginActivity : AppCompatActivity() {
 
     private fun init() = with(binding) {
         buttonLogin.setOnClickListener {
-            vm.authUser(editTextPhone.text.toString(), editTextPassword.text.toString())
+            vm.authUser(
+                phone = editTextPhone.text.toString(),
+                password = editTextPassword.text.toString(),
+                rememberState = checkBoxRememberMe.isChecked
+            )
         }
 
         vm.errorMessageLive.observe(this@LoginActivity) {
             MaterialAlertDialogBuilder(this@LoginActivity)
                 .setTitle("Ошибка входа в аккаунт")
                 .setMessage(it.joinToString(separator = "\n"))
-                .setPositiveButton("ОК") { dialog, which ->
+                .setPositiveButton("ОК") { dialog, _ ->
                     dialog.cancel()
                 }
                 .show()

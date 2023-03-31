@@ -1,9 +1,9 @@
 package com.example.donate.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isInvisible
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.donate.R
@@ -40,6 +40,11 @@ class SearchActivity : AppCompatActivity(), TaskAdapter.OnClickListener {
         }
 
         chipGroupFilters.setOnCheckedStateChangeListener { _, _ ->
+            if (viewSearch.editTextSearchTasks.text.isNullOrEmpty()) {
+                if (tasksAdapter.itemCount > 0) tasksAdapter.submitList(emptyList())
+                return@setOnCheckedStateChangeListener
+            }
+
             vm.searchTasks(
                 query = viewSearch.editTextSearchTasks.text.toString(),
                 category = chipGroupFilters.checkedChipId
@@ -47,10 +52,15 @@ class SearchActivity : AppCompatActivity(), TaskAdapter.OnClickListener {
         }
 
         viewSearch.editTextSearchTasks.addTextChangedListener {
-            vm.searchTasks(
-                query = it.toString(),
-                category = chipGroupFilters.checkedChipId
-            )
+            if (it.isNullOrEmpty()) {
+                if (layoutEmptySearch.isInvisible) layoutEmptySearch.visibility = View.VISIBLE
+                if (tasksAdapter.itemCount > 0) tasksAdapter.submitList(emptyList())
+            } else {
+                vm.searchTasks(
+                    query = it.toString(),
+                    category = chipGroupFilters.checkedChipId
+                )
+            }
         }
 
         vm.tasksListLive.observe(this@SearchActivity) {
@@ -58,7 +68,6 @@ class SearchActivity : AppCompatActivity(), TaskAdapter.OnClickListener {
                 layoutEmptySearch.visibility = View.VISIBLE
             else
                 layoutEmptySearch.visibility = View.INVISIBLE
-            Log.d("info", "ChipID: ${chipGroupFilters.checkedChipId}")
             tasksAdapter.submitList(it)
         }
     }

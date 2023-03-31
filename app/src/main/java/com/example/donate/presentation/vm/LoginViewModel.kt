@@ -7,22 +7,18 @@ import androidx.lifecycle.viewModelScope
 import com.example.donate.domain.model.AuthByPhoneUserParam
 import com.example.donate.domain.model.UserItem
 import com.example.donate.domain.usecase.AuthByPhoneUseCase
-import com.example.donate.domain.usecase.AuthBySavedDataUseCase
-import com.example.donate.domain.usecase.AuthByTokenUseCase
+import com.example.donate.domain.usecase.AuthByRememberDataUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class LoginViewModel(
-    private val authByTokenUseCase: AuthByTokenUseCase,
-    private val authByPhoneUseCase: AuthByPhoneUseCase,
-    private val authBySavedDataUseCase: AuthBySavedDataUseCase
+    private val authByRememberDataUseCase: AuthByRememberDataUseCase,
+    private val authByPhoneUseCase: AuthByPhoneUseCase
 ) : ViewModel() {
+
     private val autoAuthPossibleMutable = MutableLiveData<Boolean>()
     val autoAuthPossibleLive: LiveData<Boolean> = autoAuthPossibleMutable
-
-    private val tokenIsExistMutable = MutableLiveData<Boolean>()
-    val tokenIsExistLive: LiveData<Boolean> = tokenIsExistMutable
 
     private val userMutable = MutableLiveData<UserItem?>()
     val userLive: LiveData<UserItem?> = userMutable
@@ -30,17 +26,18 @@ class LoginViewModel(
     private val errorMessageMutable = MutableLiveData<List<String>>()
     val errorMessageLive: LiveData<List<String>> = errorMessageMutable
 
-    fun authUser() {
-        tokenIsExistMutable.value = authByTokenUseCase()
+    fun autoAuthUserIfPossible() {
+        autoAuthPossibleMutable.value = authByRememberDataUseCase()
     }
 
-    fun authUser(phone: String, password: String) {
+    fun authUser(phone: String, password: String, rememberState: Boolean = false) {
         viewModelScope.launch {
             val authResult = withContext(Dispatchers.IO) {
                 authByPhoneUseCase(
                     AuthByPhoneUserParam(
                         phoneNumber = phone,
-                        password = password
+                        password = password,
+                        remember = rememberState
                     )
                 )
             }
@@ -53,9 +50,5 @@ class LoginViewModel(
                 }
             }
         }
-    }
-
-    fun autoAuthUserIfPossible() {
-        autoAuthPossibleMutable.value = authBySavedDataUseCase()
     }
 }

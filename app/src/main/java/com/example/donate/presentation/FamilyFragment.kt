@@ -4,11 +4,15 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.MenuRes
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.donate.R
@@ -18,7 +22,6 @@ import com.example.donate.domain.model.TaskItem
 import com.example.donate.presentation.adapter.FamilyMemberAdapter
 import com.example.donate.presentation.adapter.FamilyMemberTaskAdapter
 import com.example.donate.presentation.util.IntentConstants
-import com.example.donate.presentation.util.addChip
 import com.example.donate.presentation.util.createLoadingDialog
 import com.example.donate.presentation.util.showTaskInfo
 import com.example.donate.presentation.vm.FamilyViewModel
@@ -54,18 +57,17 @@ class FamilyFragment : Fragment(), FamilyMemberAdapter.OnClickListener, FamilyMe
     }
 
     private fun init() = with(binding) {
-        val taskCategories = resources.getStringArray(R.array.task_categories)
-        taskCategories.forEach {
-            chipGroupFilters.addView(requireActivity().addChip(taskCategories.indexOf(it), it))
-        }
-        chipGroupFilters.check(0)
-
         val intent = Intent(requireActivity(), AddFamilyMemberActivity::class.java)
 
         vm.childFamilyMembersLive.observe(viewLifecycleOwner) { familyMembers ->
             intent.putExtra(IntentConstants.QR_CODE_VALUE, vm.familyIdLive.value)
 
-            familyMembers?.forEach {
+            if (familyMembers.isNullOrEmpty()) {
+                layoutNoChild.visibility = View.VISIBLE
+                return@observe
+            } else if (layoutNoChild.isVisible) layoutNoChild.visibility = View.INVISIBLE
+
+            familyMembers.forEach {
                 familyMemberTaskAdapters[it.role] = FamilyMemberTaskAdapter(this@FamilyFragment)
             }
 
@@ -78,12 +80,12 @@ class FamilyFragment : Fragment(), FamilyMemberAdapter.OnClickListener, FamilyMe
             loadingDialog.dismiss()
 
             loadingDialog = requireActivity().createLoadingDialog("Получение списка задач для каждого ребенка").show()
-            vm.getTasksByFilter(chipGroupFilters.checkedChipId)
+            vm.getTasksByFilter(0)
         }
 
-        chipGroupFilters.setOnCheckedStateChangeListener { _, _ ->
+        /*chipGroupFilters.setOnCheckedStateChangeListener { _, _ ->
             vm.getTasksByFilter(chipGroupFilters.checkedChipId)
-        }
+        }*/
 
         fabAddFamilyMember.setOnClickListener {
             startActivity(intent)
@@ -103,6 +105,38 @@ class FamilyFragment : Fragment(), FamilyMemberAdapter.OnClickListener, FamilyMe
 
             if (loadingDialog.isShowing) loadingDialog.dismiss()
         }
+    }
+
+    private fun showMenu(v: View, @MenuRes menuRes: Int) {
+
+        fun categoryFromItemId(itemId: Int): Int {
+            return when (itemId) {
+                R.id.categoryBehavior -> 0
+                R.id.categoryHome -> 1
+                R.id.categoryStudy -> 2
+                R.id.categoryCreative -> 3
+                R.id.categorySport -> 4
+                else -> 0
+            }
+        }
+
+        val popup = PopupMenu(requireContext(), v)
+        popup.menuInflater.inflate(menuRes, popup.menu)
+
+        popup.setOnMenuItemClickListener { menuItem: MenuItem ->
+            // Respond to menu item click.
+            vm.getTasksByFilter(categoryFromItemId(menuItem.itemId))
+            return@setOnMenuItemClickListener true
+        }
+        popup.setOnDismissListener {
+            // Respond to popup being dismissed.
+        }
+        // Show the popup menu.
+        popup.show()
+    }
+
+    override fun onShowCategoriesMenuClick(view: View) {
+        showMenu(view, R.menu.categories_menu)
     }
 
     override fun onAddFamilyMemberTaskClick(item: FamilyMemberItem) {

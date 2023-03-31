@@ -48,11 +48,11 @@ class TaskInfoActivity : AppCompatActivity() {
         }
 
         fabFinishTask.setOnClickListener {
-            val taskId = intent.getStringExtra(IntentConstants.TASK_ID)
-            val userId = intent.getStringExtra(IntentConstants.TASK_EXECUTOR_ID)
-
-            if (taskId != null && userId != null) {
-                vm.finishTask(taskId, userId)
+            intent.getStringExtra(IntentConstants.TASK_ID)?.let {
+                vm.finishTask(
+                    taskId = it,
+                    userId = intent.getStringExtra(IntentConstants.TASK_EXECUTOR_ID)!!
+                )
             }
         }
     }
