@@ -18,6 +18,7 @@ class NetworkUserStorage(context: Context, apiClient: ApiClient, private val use
         val response = apiService.registerUser(request).execute()
         if (response.isSuccessful) {
             response.body()?.let {
+                userDataStorage.saveData(true.toString(), PrefDataConstants.USER_LOGGED_IN)
                 saveUserData(
                     login = request.phoneNumber,
                     password = request.password,

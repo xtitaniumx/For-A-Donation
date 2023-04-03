@@ -94,6 +94,10 @@ class FamilyFragment : Fragment(), FamilyMemberAdapter.OnClickListener, FamilyMe
             startActivity(intent)
         }
 
+        fabUpdateFamilyList.setOnClickListener {
+            vm.getFamilyMembers()
+        }
+
         startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK && result.data != null) {
                 val taskId = result?.data?.getStringExtra(IntentConstants.NEW_TASK_ID)

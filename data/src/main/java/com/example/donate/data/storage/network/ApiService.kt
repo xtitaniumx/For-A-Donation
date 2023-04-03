@@ -25,7 +25,7 @@ interface ApiService {
     @GET("/api/User/GetById/{id}")
     fun getUserById(@Path("id") id: String): Call<UserResponse>
 
-    @GET("/api/Task/GetAll")
+    @GET("/api/Task/GetAllFamilyTask")
     fun getAllTasks(): Call<List<TaskResponse>>
 
     @GET("/api/Task/GetById/{id}")
