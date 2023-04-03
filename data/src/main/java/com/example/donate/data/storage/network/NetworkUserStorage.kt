@@ -13,6 +13,7 @@ import java.nio.charset.StandardCharsets
 
 class NetworkUserStorage(context: Context, apiClient: ApiClient, private val userDataStorage: UserDataStorage) : UserStorage {
     private val apiService = apiClient.getApiService(context)
+
     override suspend fun register(request: RegisterUserRequest): UserResponse? {
         val response = apiService.registerUser(request).execute()
         if (response.isSuccessful) {
@@ -31,8 +32,7 @@ class NetworkUserStorage(context: Context, apiClient: ApiClient, private val use
         val response = apiService.authUserByPhone(request).execute()
         if (response.isSuccessful) {
             response.body()?.let {
-                userDataStorage.setDataId(PrefDataConstants.USER_LOGGED_IN)
-                userDataStorage.saveData(request.remember.toString())
+                userDataStorage.saveData(request.remember.toString(), PrefDataConstants.USER_LOGGED_IN)
                 saveUserData(
                     login = request.phoneNumber,
                     password = request.password,
@@ -49,14 +49,14 @@ class NetworkUserStorage(context: Context, apiClient: ApiClient, private val use
     }
 
     private fun saveUserData(login: String, password: String, userResponse: UserResponse) {
-        userDataStorage.setDataId(PrefDataConstants.USER_TOKEN)
         userDataStorage.saveData(
-            makeToken(login = login, password = password)
+            makeToken(login = login, password = password),
+            PrefDataConstants.USER_TOKEN
         )
-        userDataStorage.setDataId(PrefDataConstants.USER_ID)
-        userDataStorage.saveData(userResponse.id)
-        userDataStorage.setDataId(PrefDataConstants.FAMILY_ID)
-        userResponse.familyId?.let { id -> userDataStorage.saveData(id) }
+        userDataStorage.saveData(userResponse.id, PrefDataConstants.USER_ID)
+        userResponse.familyId?.let { id ->
+            userDataStorage.saveData(id, PrefDataConstants.FAMILY_ID)
+        }
     }
 
     private fun makeToken(login: String, password: String): String {

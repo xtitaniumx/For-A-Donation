@@ -1,9 +1,9 @@
 package com.example.donate.data.storage
 
 interface UserDataStorage {
-    fun setDataId(id: String)
+    fun saveData(data: String, dataId: String)
 
-    fun saveData(data: String)
+    fun fetchData(dataId: String): String?
 
-    fun fetchData(): String?
+    fun removeAllData()
 }

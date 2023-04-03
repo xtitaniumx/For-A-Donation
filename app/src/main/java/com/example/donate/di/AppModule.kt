@@ -6,7 +6,7 @@ import org.koin.dsl.module
 
 val appModule = module {
     viewModel {
-        CreateFamilyViewModel(registerUserUseCase = get())
+        CreateFamilyViewModel(accountRegisterUseCase = get())
     }
 
     viewModel {
@@ -33,7 +33,8 @@ val appModule = module {
     viewModel {
         ProfileViewModel(
             getUserIdUseCase = get(),
-            getUserByIdUseCase = get()
+            getUserByIdUseCase = get(),
+            logOutAccountUseCase = get()
         )
     }
 

@@ -2,6 +2,9 @@ package com.example.donate.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import com.example.donate.R
 import com.example.donate.databinding.ActivityTaskInfoBinding
 import com.example.donate.presentation.util.IntentConstants
@@ -26,6 +29,13 @@ class TaskInfoActivity : AppCompatActivity() {
         textTaskName.text = intent.getStringExtra(IntentConstants.TASK_NAME)
         textTaskDesc.text = intent.getStringExtra(IntentConstants.TASK_DESCRIPTION)
         textRewardAmount.text = intent.getIntExtra(IntentConstants.TASK_POINTS, 0).toString()
+        intent.getBooleanExtra(IntentConstants.TASK_IS_FINISHED, false).apply {
+            if (this) {
+                if (fabFinishTask.isVisible) fabFinishTask.visibility = View.GONE
+            } else {
+                if (fabFinishTask.isGone) fabFinishTask.visibility = View.VISIBLE
+            }
+        }
 
         vm.userLive.observe(this@TaskInfoActivity) {
             if (it == null) return@observe

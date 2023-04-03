@@ -11,16 +11,14 @@ import com.example.donate.domain.model.*
 import com.example.donate.domain.repository.UserRepository
 
 class UserRepositoryImpl(private val userStorage: UserStorage, private val userDataStorage: UserDataStorage) : UserRepository {
-    override suspend fun registerUser(param: RegisterUserParam): UserItem? {
+    override suspend fun registerAccount(param: AccountRegisterParam): UserItem? {
         val user = userStorage.register(mapToStorage(registerUserParam = param))
         return user?.let { mapToDomain(userResponse = it) }
     }
 
     override fun authByRememberData(): Boolean {
-        userDataStorage.setDataId(PrefDataConstants.USER_TOKEN)
-        val tokenIsExist = !userDataStorage.fetchData().isNullOrEmpty()
-        userDataStorage.setDataId(PrefDataConstants.USER_LOGGED_IN)
-        val loginState = userDataStorage.fetchData().toBoolean()
+        val tokenIsExist = !userDataStorage.fetchData(PrefDataConstants.USER_TOKEN).isNullOrEmpty()
+        val loginState = userDataStorage.fetchData(PrefDataConstants.USER_LOGGED_IN).toBoolean()
 
         return tokenIsExist && loginState
     }
@@ -30,19 +28,21 @@ class UserRepositoryImpl(private val userStorage: UserStorage, private val userD
         return user?.let { mapToDomain(userResponse = it) }
     }
 
+    override fun logOutAccount() {
+        userDataStorage.removeAllData()
+    }
+
     override suspend fun getUserById(param: GetUserByIdParam): UserItem? {
         val user = userStorage.get(mapToStorage(getUserByIdParam = param))
         return user?.let { mapToDomain(userResponse = it) }
     }
 
     override fun getUserId(): String? {
-        userDataStorage.setDataId(PrefDataConstants.USER_ID)
-        return userDataStorage.fetchData()
+        return userDataStorage.fetchData(PrefDataConstants.USER_ID)
     }
 
     override fun getFamilyId(): String? {
-        userDataStorage.setDataId(PrefDataConstants.FAMILY_ID)
-        return userDataStorage.fetchData()
+        return userDataStorage.fetchData(PrefDataConstants.FAMILY_ID)
     }
 
     private fun mapToStorage(authByPhoneUserParam: AuthByPhoneUserParam): AuthByPhoneRequest {
@@ -53,7 +53,7 @@ class UserRepositoryImpl(private val userStorage: UserStorage, private val userD
         )
     }
 
-    private fun mapToStorage(registerUserParam: RegisterUserParam): RegisterUserRequest {
+    private fun mapToStorage(registerUserParam: AccountRegisterParam): RegisterUserRequest {
         return RegisterUserRequest(
             name = registerUserParam.name,
             phoneNumber = registerUserParam.phoneNumber,

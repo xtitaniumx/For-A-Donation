@@ -5,11 +5,7 @@ import org.koin.dsl.module
 
 val domainModule = module {
     factory {
-        AddFamilyMemberUseCase(familyRepository = get())
-    }
-
-    factory {
-        AddNewTaskUseCase(taskRepository = get())
+        RegisterAccountUseCase(userRepository = get())
     }
 
     factory {
@@ -21,11 +17,15 @@ val domainModule = module {
     }
 
     factory {
-        GetAllTasksUseCase(taskRepository = get())
+        LogOutAccountUseCase(userRepository = get())
     }
 
     factory {
-        GetFamilyByIdUseCase(familyRepository = get())
+        GetUserIdUseCase(userRepository = get())
+    }
+
+    factory {
+        GetUserByIdUseCase(userRepository = get())
     }
 
     factory {
@@ -33,7 +33,19 @@ val domainModule = module {
     }
 
     factory {
-        GetTaskByFilterUseCase(taskRepository = get())
+        GetFamilyByIdUseCase(familyRepository = get())
+    }
+
+    factory {
+        AddFamilyMemberUseCase(familyRepository = get())
+    }
+
+    factory {
+        AddNewTaskUseCase(taskRepository = get())
+    }
+
+    factory {
+        GetAllTasksUseCase(taskRepository = get())
     }
 
     factory {
@@ -45,18 +57,10 @@ val domainModule = module {
     }
 
     factory {
-        GetUserByIdUseCase(userRepository = get())
-    }
-
-    factory {
-        GetUserIdUseCase(userRepository = get())
+        GetTaskByFilterUseCase(taskRepository = get())
     }
 
     factory {
         MarkTaskAsFinishUseCase(taskRepository = get())
-    }
-
-    factory {
-        RegisterUserUseCase(userRepository = get())
     }
 }

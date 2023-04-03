@@ -182,6 +182,7 @@
         android:clickable="true"
         android:focusable="true"
         android:text="Задача завершена"
+        android:visibility="gone"
         app:icon="@drawable/ic_checked"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -3,6 +3,7 @@ package com.example.donate.presentation.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
@@ -15,27 +16,27 @@ import com.google.android.material.divider.MaterialDividerItemDecoration
 
 class FamilyMemberAdapter(
     private val listener: OnClickListener,
-    private val childAdaptersList: Map<Int, FamilyMemberTaskAdapter>
+    private val childAdaptersList: Map<String, FamilyMemberTaskAdapter>
 ) : ListAdapter<FamilyMemberItem, FamilyMemberAdapter.Holder>(Comparator()) {
 
     interface OnClickListener {
-        fun onShowCategoriesMenuClick(view: View)
+        fun onShowCategoriesMenuClick(view: View, familyMemberId: String)
 
         fun onAddFamilyMemberTaskClick(item: FamilyMemberItem)
     }
 
-    fun submitNestedList(list: List<TaskItem>, position: Int) {
-        childAdaptersList[position]?.submitList(list)
+    fun submitNestedList(list: List<TaskItem>?, familyMemberId: String) {
+        childAdaptersList[familyMemberId]?.submitList(list)
     }
 
-    class Holder(itemView: View, listener: OnClickListener, private val childAdaptersList: Map<Int, FamilyMemberTaskAdapter>) : ViewHolder(itemView) {
+    class Holder(itemView: View, listener: OnClickListener, private val childAdaptersList: Map<String, FamilyMemberTaskAdapter>) : ViewHolder(itemView) {
         private val binding = ItemFamilyMemberBinding.bind(itemView)
         private val context = itemView.context
         private lateinit var familyMemberItem: FamilyMemberItem
 
         init {
             binding.buttonShowCategories.setOnClickListener {
-                listener.onShowCategoriesMenuClick(view = it)
+                listener.onShowCategoriesMenuClick(view = it, familyMemberId = familyMemberItem.id)
             }
             binding.buttonAddTask.setOnClickListener {
                 listener.onAddFamilyMemberTaskClick(item = familyMemberItem)
@@ -45,14 +46,14 @@ class FamilyMemberAdapter(
         fun bind(item: FamilyMemberItem) = with(binding) {
             familyMemberItem = item
             textFamilyMemberRole.text = context.resources.getStringArray(R.array.family_roles)[item.role]
-            textFamilyMemberGoal.text = ""
+            textFamilyMemberGoal.text = "Хочет: путёвку в Египет"
 
             if (listFamilyMemberTasks.adapter == null) {
                 val divider = MaterialDividerItemDecoration(context, LinearLayoutManager.VERTICAL)
                 listFamilyMemberTasks.apply {
                     layoutManager = LinearLayoutManager(context)
                     addItemDecoration(divider)
-                    adapter = childAdaptersList[item.role]
+                    adapter = childAdaptersList[item.id]
                 }
             }
         }

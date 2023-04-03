@@ -1,5 +1,6 @@
 package com.example.donate.presentation.vm
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,11 +25,11 @@ class FamilyViewModel(
     private val childFamilyMembersMutable = MutableLiveData<List<FamilyMemberItem>?>()
     val childFamilyMembersLive: LiveData<List<FamilyMemberItem>?> = childFamilyMembersMutable
 
-    private val childTasksMutable = MutableLiveData<Map<Int, List<TaskItem>?>?>()
-    val childTasksLive: LiveData<Map<Int, List<TaskItem>?>?> = childTasksMutable
+    private val childTasksMutable = MutableLiveData<Map<String, List<TaskItem>?>?>()
+    val childTasksLive: LiveData<Map<String, List<TaskItem>?>?> = childTasksMutable
 
-    private val memberRoleIdMutable = MutableLiveData<Int>()
-    val memberRoleIdLive: LiveData<Int> = memberRoleIdMutable
+    private val memberIdMutable = MutableLiveData<String>()
+    val memberIdLive: LiveData<String> = memberIdMutable
 
     fun getFamilyMembers() {
         viewModelScope.launch {
@@ -42,18 +43,18 @@ class FamilyViewModel(
         }
     }
 
-    fun getTaskById(id: String, roleId: Int) {
+    fun getTaskById(id: String, familyMemberId: String) {
         viewModelScope.launch {
             val newTask = withContext(Dispatchers.IO) {
                 getTaskByIdUseCase(GetTaskByIdParam(taskId = id))
             }
-
             newTask?.let { task ->
-                val newMap = HashMap<Int, List<TaskItem>>()
+                val newMap = HashMap<String, List<TaskItem>>()
                 val newList = ArrayList<TaskItem>()
-                childTasksLive.value?.get(roleId)?.let { it -> newList.addAll(it) }
+
+                childTasksLive.value?.get(familyMemberId)?.let { it -> newList.addAll(it) }
                 newList.add(task)
-                newMap[roleId] = newList
+                newMap[familyMemberId] = newList
                 childTasksMutable.value = newMap
             }
         }
@@ -64,7 +65,7 @@ class FamilyViewModel(
             val userId = getUserIdUseCase()
             userId?.let {
                 val tasks = withContext(Dispatchers.IO) {
-                    val newMap = HashMap<Int, List<TaskItem>?>()
+                    val newMap = HashMap<String, List<TaskItem>?>()
                     childFamilyMembersLive.value?.forEach { familyMember ->
                         val childTasks = getTaskByFilterUseCase(
                             GetTaskByFilterParam(
@@ -73,7 +74,7 @@ class FamilyViewModel(
                                 category = categoryNum
                             )
                         )
-                        newMap[familyMember.role] = childTasks
+                        newMap[familyMember.id] = childTasks
                     }
                     newMap
                 }
@@ -82,7 +83,31 @@ class FamilyViewModel(
         }
     }
 
-    fun setMemberRole(roleId: Int) {
-        memberRoleIdMutable.value = roleId
+    fun getTasksByFilterForMember(categoryNum: Int, familyMemberId: String) {
+        viewModelScope.launch {
+            val newMap = HashMap<String, List<TaskItem>?>().apply {
+                putAll(childTasksLive.value!!)
+            }
+            Log.d("info", "try to get")
+            val userId = getUserIdUseCase()
+            userId?.let {
+                val childTasks = withContext(Dispatchers.IO) {
+                    getTaskByFilterUseCase(
+                        GetTaskByFilterParam(
+                            executorId = familyMemberId,
+                            customerId = it,
+                            category = categoryNum
+                        )
+                    )
+                }
+                newMap[familyMemberId] = childTasks
+                Log.d("info", "Map: ${newMap[familyMemberId]}")
+                childTasksMutable.value = newMap
+            }
+        }
+    }
+
+    fun setMemberId(id: String) {
+        memberIdMutable.value = id
     }
 }

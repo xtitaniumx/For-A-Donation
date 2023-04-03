@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.donate.domain.model.GetUserByIdParam
 import com.example.donate.domain.model.UserItem
+import com.example.donate.domain.usecase.LogOutAccountUseCase
 import com.example.donate.domain.usecase.GetUserByIdUseCase
 import com.example.donate.domain.usecase.GetUserIdUseCase
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +15,8 @@ import kotlinx.coroutines.withContext
 
 class ProfileViewModel(
     private val getUserIdUseCase: GetUserIdUseCase,
-    private val getUserByIdUseCase: GetUserByIdUseCase
+    private val getUserByIdUseCase: GetUserByIdUseCase,
+    private val logOutAccountUseCase: LogOutAccountUseCase
 ) : ViewModel() {
     private val userMutable = MutableLiveData<UserItem?>()
     val userLive: LiveData<UserItem?> = userMutable
@@ -29,5 +31,9 @@ class ProfileViewModel(
                 userMutable.value = user
             }
         }
+    }
+
+    fun logOut() {
+        logOutAccountUseCase()
     }
 }

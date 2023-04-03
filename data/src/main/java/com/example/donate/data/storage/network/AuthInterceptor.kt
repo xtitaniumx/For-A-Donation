@@ -13,8 +13,7 @@ class AuthInterceptor(context: Context) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val requestBuilder = chain.request().newBuilder()
 
-        sharedPrefsUserDataStorage.setDataId(PrefDataConstants.USER_TOKEN)
-        sharedPrefsUserDataStorage.fetchData()?.let {
+        sharedPrefsUserDataStorage.fetchData(PrefDataConstants.USER_TOKEN)?.let {
             requestBuilder.addHeader("Authorization", it)
         }
 

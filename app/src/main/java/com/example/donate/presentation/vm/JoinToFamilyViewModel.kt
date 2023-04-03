@@ -4,14 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.donate.domain.model.RegisterUserParam
+import com.example.donate.domain.model.AccountRegisterParam
 import com.example.donate.domain.model.UserItem
-import com.example.donate.domain.usecase.RegisterUserUseCase
+import com.example.donate.domain.usecase.RegisterAccountUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class JoinToFamilyViewModel(private val registerUserUseCase: RegisterUserUseCase) : ViewModel() {
+class JoinToFamilyViewModel(private val registerUserUseCase: RegisterAccountUseCase) : ViewModel() {
     private val userMutable = MutableLiveData<UserItem?>()
     val userLive: LiveData<UserItem?> = userMutable
 
@@ -22,7 +22,7 @@ class JoinToFamilyViewModel(private val registerUserUseCase: RegisterUserUseCase
         viewModelScope.launch {
             val registerResult = withContext(Dispatchers.IO) {
                 registerUserUseCase(
-                    RegisterUserParam(
+                    AccountRegisterParam(
                         name, phoneNumber, password, passwordConfirm, gender, role, familyId
                     )
                 )

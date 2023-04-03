@@ -3,6 +3,7 @@ package com.example.donate.presentation.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +19,7 @@ class FamilyMemberTaskAdapter(private val listener: OnChildClickListener) : List
     class Holder(itemView: View, private val listener: OnChildClickListener) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemFamilyMemberTaskBinding.bind(itemView)
         private lateinit var taskItem: TaskItem
+        private lateinit var popupMenu: PopupMenu
 
         init {
             binding.root.setOnClickListener {

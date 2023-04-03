@@ -1,5 +1,6 @@
 package com.example.donate.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import com.example.donate.R
 import com.example.donate.databinding.FragmentProfileBinding
 import com.example.donate.presentation.adapter.ProfileOptionAdapter
 import com.example.donate.presentation.model.ProfileOptionItem
+import com.example.donate.presentation.util.clearStack
 import com.example.donate.presentation.vm.ProfileViewModel
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -72,7 +74,11 @@ class ProfileFragment : Fragment(), ProfileOptionAdapter.OnClickListener {
         }
 
         buttonLogOut.setOnClickListener {
-            
+            vm.logOut()
+
+            val intent = Intent(requireActivity(), RegisterActivity::class.java)
+            intent.clearStack()
+            startActivity(intent)
         }
     }
 

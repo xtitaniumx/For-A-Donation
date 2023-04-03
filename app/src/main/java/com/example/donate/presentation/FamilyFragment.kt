@@ -27,11 +27,11 @@ import com.example.donate.presentation.util.showTaskInfo
 import com.example.donate.presentation.vm.FamilyViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class FamilyFragment : Fragment(), FamilyMemberAdapter.OnClickListener, FamilyMemberTaskAdapter.OnChildClickListener {
+class FamilyFragment : Fragment(), FamilyMemberAdapter.OnClickListener, FamilyMemberTaskAdapter.OnChildClickListener, PopupMenu.OnMenuItemClickListener {
     private val vm by viewModel<FamilyViewModel>()
     private lateinit var binding: FragmentFamilyBinding
     private lateinit var loadingDialog: AlertDialog
-    private val familyMemberTaskAdapters by lazy { HashMap<Int, FamilyMemberTaskAdapter>() }
+    private val familyMemberTaskAdapters by lazy { HashMap<String, FamilyMemberTaskAdapter>() }
     private val familyMemberAdapter by lazy { FamilyMemberAdapter(this, familyMemberTaskAdapters) }
     private lateinit var startForResult: ActivityResultLauncher<Intent>
 
@@ -44,6 +44,12 @@ class FamilyFragment : Fragment(), FamilyMemberAdapter.OnClickListener, FamilyMe
         super.onCreate(savedInstanceState)
         loadingDialog = requireActivity().createLoadingDialog("Получение списка семьи").show()
         vm.getFamilyMembers()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!vm.childFamilyMembersLive.value.isNullOrEmpty())
+            vm.getTasksByFilter(0)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -63,12 +69,13 @@ class FamilyFragment : Fragment(), FamilyMemberAdapter.OnClickListener, FamilyMe
             intent.putExtra(IntentConstants.QR_CODE_VALUE, vm.familyIdLive.value)
 
             if (familyMembers.isNullOrEmpty()) {
+                loadingDialog.dismiss()
                 layoutNoChild.visibility = View.VISIBLE
                 return@observe
             } else if (layoutNoChild.isVisible) layoutNoChild.visibility = View.INVISIBLE
 
             familyMembers.forEach {
-                familyMemberTaskAdapters[it.role] = FamilyMemberTaskAdapter(this@FamilyFragment)
+                familyMemberTaskAdapters[it.id] = FamilyMemberTaskAdapter(this@FamilyFragment)
             }
 
             listFamily.apply {
@@ -83,10 +90,6 @@ class FamilyFragment : Fragment(), FamilyMemberAdapter.OnClickListener, FamilyMe
             vm.getTasksByFilter(0)
         }
 
-        /*chipGroupFilters.setOnCheckedStateChangeListener { _, _ ->
-            vm.getTasksByFilter(chipGroupFilters.checkedChipId)
-        }*/
-
         fabAddFamilyMember.setOnClickListener {
             startActivity(intent)
         }
@@ -94,13 +97,13 @@ class FamilyFragment : Fragment(), FamilyMemberAdapter.OnClickListener, FamilyMe
         startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK && result.data != null) {
                 val taskId = result?.data?.getStringExtra(IntentConstants.NEW_TASK_ID)
-                taskId?.let { vm.getTaskById(it, vm.memberRoleIdLive.value!!) }
+                taskId?.let { vm.getTaskById(it, vm.memberIdLive.value.toString()) }
             }
         }
 
         vm.childTasksLive.observe(viewLifecycleOwner) { childTasks ->
             childTasks?.forEach { task ->
-                task.value?.let { familyMemberAdapter.submitNestedList(it, task.key) }
+                familyMemberAdapter.submitNestedList(task.value, task.key)
             }
 
             if (loadingDialog.isShowing) loadingDialog.dismiss()
@@ -108,7 +111,18 @@ class FamilyFragment : Fragment(), FamilyMemberAdapter.OnClickListener, FamilyMe
     }
 
     private fun showMenu(v: View, @MenuRes menuRes: Int) {
+        val popup = PopupMenu(requireContext(), v)
+        popup.menuInflater.inflate(menuRes, popup.menu)
+        popup.setOnMenuItemClickListener(this)
+        popup.show()
+    }
 
+    override fun onShowCategoriesMenuClick(view: View, familyMemberId: String) {
+        vm.setMemberId(familyMemberId)
+        showMenu(view, R.menu.categories_menu)
+    }
+
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
         fun categoryFromItemId(itemId: Int): Int {
             return when (itemId) {
                 R.id.categoryBehavior -> 0
@@ -120,28 +134,13 @@ class FamilyFragment : Fragment(), FamilyMemberAdapter.OnClickListener, FamilyMe
             }
         }
 
-        val popup = PopupMenu(requireContext(), v)
-        popup.menuInflater.inflate(menuRes, popup.menu)
-
-        popup.setOnMenuItemClickListener { menuItem: MenuItem ->
-            // Respond to menu item click.
-            vm.getTasksByFilter(categoryFromItemId(menuItem.itemId))
-            return@setOnMenuItemClickListener true
-        }
-        popup.setOnDismissListener {
-            // Respond to popup being dismissed.
-        }
-        // Show the popup menu.
-        popup.show()
-    }
-
-    override fun onShowCategoriesMenuClick(view: View) {
-        showMenu(view, R.menu.categories_menu)
+        vm.getTasksByFilterForMember(categoryFromItemId(item!!.itemId), vm.memberIdLive.value.toString())
+        return true
     }
 
     override fun onAddFamilyMemberTaskClick(item: FamilyMemberItem) {
         Intent(requireActivity(), NewTaskActivity::class.java).apply {
-            vm.setMemberRole(item.role)
+            vm.setMemberId(item.id)
             putExtra(IntentConstants.MEMBER_ROLE, item.role)
             startForResult.launch(this)
         }

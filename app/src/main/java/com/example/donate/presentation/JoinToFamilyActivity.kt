@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.donate.R
 import com.example.donate.databinding.ActivityJoinToFamilyBinding
 import com.example.donate.presentation.util.IntentConstants
+import com.example.donate.presentation.util.clearStack
 import com.example.donate.presentation.vm.JoinToFamilyViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mindorks.editdrawabletext.DrawablePosition
@@ -125,6 +126,7 @@ class JoinToFamilyActivity : AppCompatActivity() {
 
         vm.userLive.observe(this@JoinToFamilyActivity) {
             val intent = Intent(this@JoinToFamilyActivity, MainActivity::class.java)
+            intent.clearStack()
             startActivity(intent)
         }
     }

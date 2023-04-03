@@ -15,6 +15,10 @@ fun Activity.getColorCompat(id: Int): Int {
     return ContextCompat.getColor(this, id)
 }
 
+fun Intent.clearStack() {
+    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+}
+
 fun Activity.createLoadingDialog(title: String): MaterialAlertDialogBuilder {
     val dialogBuilder = MaterialAlertDialogBuilder(this).apply {
         DialogLoadingDataBinding.inflate(layoutInflater).apply {
@@ -44,6 +48,7 @@ fun Activity.showTaskInfo(taskItem: TaskItem) {
         putExtra(IntentConstants.TASK_EXECUTOR_ID, taskItem.executorId)
         putExtra(IntentConstants.TASK_POINTS, taskItem.points)
         putExtra(IntentConstants.TASK_TIME_LIMIT, taskItem.dateTimeFinish)
+        putExtra(IntentConstants.TASK_IS_FINISHED, taskItem.isFinished)
     }
     startActivity(intent)
 }

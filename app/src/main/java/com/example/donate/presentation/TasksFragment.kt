@@ -32,6 +32,10 @@ class TasksFragment : Fragment(), TaskAdapter.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         loadingDialog = requireActivity().createLoadingDialog("Получение списка задач").show()
+    }
+
+    override fun onResume() {
+        super.onResume()
         vm.getAllTasks()
     }
 
@@ -71,7 +75,7 @@ class TasksFragment : Fragment(), TaskAdapter.OnClickListener {
 
         vm.tasksListLive.observe(viewLifecycleOwner) {
             taskAdapter.submitList(it)
-            loadingDialog.dismiss()
+            if (loadingDialog.isShowing) loadingDialog.dismiss()
         }
 
         fabNewTask.setOnClickListener {

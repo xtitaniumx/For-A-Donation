@@ -10,4 +10,5 @@ object IntentConstants {
     const val TASK_EXECUTOR_ID = "task_executor_id"
     const val TASK_POINTS = "task_points"
     const val TASK_TIME_LIMIT = "task_time_limit"
+    const val TASK_IS_FINISHED = "task_is_finished"
 }

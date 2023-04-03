@@ -6,6 +6,7 @@ import android.text.method.PasswordTransformationMethod
 import androidx.appcompat.app.AppCompatActivity
 import com.example.donate.R
 import com.example.donate.databinding.ActivityCreateFamilyBinding
+import com.example.donate.presentation.util.clearStack
 import com.example.donate.presentation.vm.CreateFamilyViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mindorks.editdrawabletext.DrawablePosition
@@ -123,6 +124,7 @@ class CreateFamilyActivity : AppCompatActivity() {
 
         vm.userLive.observe(this@CreateFamilyActivity) {
             val intent = Intent(this@CreateFamilyActivity, MainActivity::class.java)
+            intent.clearStack()
             startActivity(intent)
         }
     }
